@@ -1,0 +1,28 @@
+apply from: 'aws-credentials.gradle'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    repositories {
+        maven {
+            url 's3://repository.tlist.no/releases'
+            credentials(AwsCredentials) {
+                accessKey awsCredentials.AWSAccessKeyId
+                secretKey awsCredentials.AWSSecretKey
+            }
+        }
+    }
+}
+
+
+dependencies {
+    compile "lt.tlistas:core:1.1.1"
+    compile "lt.tlistas:core-api:1.1.1"
+    compile 'com.amazonaws:aws-java-sdk-sns:1.11.258'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+
+    testCompile "junit:junit:4.12"
+    testCompile "org.mockito:mockito-core:2.13.0"
+    testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+    testCompile "com.nhaarman:mockito-kotlin:1.5.0"
+}

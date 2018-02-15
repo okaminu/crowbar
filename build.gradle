@@ -1,0 +1,20 @@
+buildscript {
+    ext.kotlin_version = '1.1.61'
+}
+
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version "1.1.61"
+}
+
+apply plugin: 'kotlin'
+apply from: 'dependencies.gradle'
+apply from: 'publish.gradle'
+apply from: 'jacoco.gradle'
+
+
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
