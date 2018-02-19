@@ -14,10 +14,12 @@ repositories {
     }
 }
 
-
 dependencies {
     compile "lt.tlistas:core:1.1.1"
     compile "lt.tlistas:core-api:1.1.1"
+
+    compile "lt.tlistas:mobile-number-confirmation-api:1.1.1"
+
     compile 'com.amazonaws:aws-java-sdk-sns:1.11.258'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
 
