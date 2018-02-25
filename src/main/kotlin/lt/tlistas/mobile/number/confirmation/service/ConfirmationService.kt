@@ -1,33 +1,19 @@
 package lt.tlistas.mobile.number.confirmation.service
 
-import lt.tlistas.mobile.number.confirmation.SmsGateway
-import lt.tlistas.mobile.number.confirmation.exception.InvalidConfirmationCodeException
+import lt.tlistas.mobile.number.confirmation.api.ConfirmationMessageGateway
 import lt.tlistas.mobile.number.confirmation.repository.ConfirmationRepository
-import lt.tlistas.core.service.CollaboratorService
 import lt.tlistas.mobile.number.confirmation.type.entity.Confirmation
 import java.util.*
 
 class ConfirmationService(private val confirmationRepository: ConfirmationRepository,
-                          private val collaboratorService: CollaboratorService,
-                          private val smsGateway: SmsGateway) {
+                          private val smsGateway: ConfirmationMessageGateway) {
 
 
-    fun sendConfirmation(mobileNumber: String) {
+    fun sendConfirmation(mobileNumber: String, userId: String) {
         val code = generate()
-        confirmationRepository.save(Confirmation(collaboratorService.getByMobileNumber(mobileNumber), code))
+        confirmationRepository.save(Confirmation(userId, code))
 
-        smsGateway.send(code, mobileNumber)
-    }
-
-    fun findByCode(code: String) = confirmationRepository.findByCode(code)
-
-    fun confirmationCodeExists(code: String) = confirmationRepository.existsByCode(code)
-
-    internal fun removeValidConfirmation(code: String) {
-        if (!confirmationCodeExists(code))
-            throw InvalidConfirmationCodeException()
-
-        confirmationRepository.deleteByCode(code)
+        //smsGateway.send(code, mobileNumber)
     }
 
     internal fun generate(): String {
@@ -35,7 +21,7 @@ class ConfirmationService(private val confirmationRepository: ConfirmationReposi
         repeat(CODE_LENGTH) {
             randomCode += Random().nextInt(10).toString()
         }
-        if (confirmationCodeExists(randomCode))
+        if (confirmationRepository.existsByCode(randomCode))
             generate()
 
         return randomCode

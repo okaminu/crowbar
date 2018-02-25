@@ -1,9 +1,10 @@
 package lt.tlistas.mobile.number.confirmation.repository
 
 import lt.tlistas.mobile.number.confirmation.type.entity.Authentication
-import org.springframework.data.mongodb.repository.MongoRepository
 
-interface AuthenticationRepository : MongoRepository<Authentication, String> {
+interface AuthenticationRepository {
+
+    fun save(authentication: Authentication)
 
     fun existsByToken(token: String): Boolean
 

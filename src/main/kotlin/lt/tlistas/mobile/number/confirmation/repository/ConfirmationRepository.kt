@@ -1,11 +1,12 @@
 package lt.tlistas.mobile.number.confirmation.repository
 
 import lt.tlistas.mobile.number.confirmation.type.entity.Confirmation
-import org.springframework.data.mongodb.repository.MongoRepository
 
-interface ConfirmationRepository : MongoRepository<Confirmation, String> {
+interface ConfirmationRepository {
 
-    fun deleteByCode(confirmationCode: String)
+    fun save(confirmation: Confirmation)
+
+    fun delete(confirmation: Confirmation)
 
     fun existsByCode(confirmationCode: String): Boolean
 
