@@ -1,4 +1,4 @@
-package lt.tlistas.test.acceptance.step
+package lt.tlistas.mobile.number.confirmation.test.acceptance.step
 
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doReturn
@@ -14,7 +14,7 @@ import lt.tlistas.mobile.number.confirmation.repository.ConfirmationRepository
 import lt.tlistas.mobile.number.confirmation.service.AuthenticationService
 import lt.tlistas.mobile.number.confirmation.service.ConfirmationService
 import lt.tlistas.mobile.number.confirmation.type.entity.Confirmation
-import lt.tlistas.test.acceptance.holder.AuthenticationHolder
+import lt.tlistas.mobile.number.confirmation.test.acceptance.holder.AuthenticationHolder
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import kotlin.test.assertNotNull

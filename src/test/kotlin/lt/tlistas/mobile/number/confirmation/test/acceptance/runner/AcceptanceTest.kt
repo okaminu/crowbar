@@ -1,4 +1,4 @@
-package lt.tlistas.test.acceptance.runner
+package lt.tlistas.mobile.number.confirmation.test.acceptance.runner
 
 import cucumber.api.CucumberOptions
 import cucumber.api.junit.Cucumber

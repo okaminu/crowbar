@@ -1,4 +1,4 @@
-package lt.tlistas.test.unit.confirmation
+package lt.tlistas.mobile.number.confirmation.test.confirmation
 
 import com.nhaarman.mockito_kotlin.*
 import lt.tlistas.mobile.number.confirmation.api.ConfirmationMessageGateway
