@@ -35,11 +35,11 @@ class ConfirmationServiceTest {
 
     @Test
     fun `Sends confirmation code to the collaborator's number`() {
-        val mobileNumber = "+3712345678"
+        val address = "+3712345678"
 
-        confirmationService.sendConfirmation(mobileNumber, "userId")
+        confirmationService.sendConfirmation(address, "userId")
 
-        verify(confirmationMessageMock).send(any(), eq(mobileNumber))
+        verify(confirmationMessageMock).send(any(), eq(address))
     }
 
     @Test

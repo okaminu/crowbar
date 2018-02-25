@@ -19,7 +19,7 @@ import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import kotlin.test.assertNotNull
 
-class ConfirmSteps : En {
+class ConfirmationSteps : En {
 
     @Mock
     private lateinit var confirmationMessageGatewayMock: ConfirmationMessageGateway
@@ -49,7 +49,7 @@ class ConfirmSteps : En {
 
     @When("^I provide confirmation address$")
     fun `I provide confirmation address`() {
-        confirmationService.sendConfirmation(MOBILE_NUMBER, authenticationHolder.userId!!)
+        confirmationService.sendConfirmation(ADDRESS, authenticationHolder.userId!!)
     }
 
     @When("^I provide correct confirmation code$")
@@ -73,6 +73,6 @@ class ConfirmSteps : En {
     companion object {
         const val USER_ID = "46afg4df4g5ds46g5s"
         const val CONFIRMATION_CODE = "123456"
-        const val MOBILE_NUMBER = "+37012345678"
+        const val ADDRESS = "+37012345678"
     }
 }

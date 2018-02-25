@@ -6,14 +6,14 @@ import lt.tlistas.mobile.number.confirmation.type.entity.Confirmation
 import java.util.*
 
 class ConfirmationService(private val confirmationRepository: ConfirmationRepository,
-                          private val smsGateway: ConfirmationMessageGateway) {
+                          private val confirmationMessageGateway: ConfirmationMessageGateway) {
 
 
     fun sendConfirmation(mobileNumber: String, userId: String) {
         val code = generate()
         confirmationRepository.save(Confirmation(userId, code))
 
-        smsGateway.send(code, mobileNumber)
+        confirmationMessageGateway.send(code, mobileNumber)
     }
 
     internal fun generate(): String {
