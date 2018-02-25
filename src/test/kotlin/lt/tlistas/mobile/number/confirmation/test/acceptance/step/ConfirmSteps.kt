@@ -73,6 +73,6 @@ class ConfirmSteps : En {
     companion object {
         const val USER_ID = "46afg4df4g5ds46g5s"
         const val CONFIRMATION_CODE = "123456"
-        const val MOBILE_NUMBER = "+370000000"
+        const val MOBILE_NUMBER = "+37012345678"
     }
 }

@@ -10,7 +10,7 @@ apply plugin: 'kotlin'
 apply from: 'dependencies.gradle'
 apply from: 'publish.gradle'
 apply from: 'jacoco.gradle'
-
+apply from: 'cucumber.gradle'
 
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
@@ -18,3 +18,4 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
         jvmTarget = "1.8"
     }
 }
+

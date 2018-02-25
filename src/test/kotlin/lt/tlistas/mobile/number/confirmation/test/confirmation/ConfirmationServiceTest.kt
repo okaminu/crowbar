@@ -39,7 +39,7 @@ class ConfirmationServiceTest {
         val mobileNumber = "+3712345678"
         confirmationService.sendConfirmation(mobileNumber, "id")
 
-       // verify(confirmationMessageMock).send(any(), eq(mobileNumber))
+        verify(confirmationMessageMock).send(any(), eq(mobileNumber))
     }
 
     @Test

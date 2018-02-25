@@ -13,7 +13,7 @@ class ConfirmationService(private val confirmationRepository: ConfirmationReposi
         val code = generate()
         confirmationRepository.save(Confirmation(userId, code))
 
-        //smsGateway.send(code, mobileNumber)
+        smsGateway.send(code, mobileNumber)
     }
 
     internal fun generate(): String {
