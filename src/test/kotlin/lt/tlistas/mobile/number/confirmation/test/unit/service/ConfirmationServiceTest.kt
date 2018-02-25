@@ -1,4 +1,4 @@
-package lt.tlistas.mobile.number.confirmation.test.confirmation
+package lt.tlistas.mobile.number.confirmation.test.unit.service
 
 import com.nhaarman.mockito_kotlin.*
 import lt.tlistas.mobile.number.confirmation.api.ConfirmationMessageGateway
@@ -30,14 +30,14 @@ class ConfirmationServiceTest {
 
     @Before
     fun `Set up`() {
-        confirmationService = ConfirmationService(confirmationRepositoryMock,
-                confirmationMessageMock)
+        confirmationService = ConfirmationService(confirmationRepositoryMock, confirmationMessageMock)
     }
 
     @Test
     fun `Sends confirmation code to the collaborator's number`() {
         val mobileNumber = "+3712345678"
-        confirmationService.sendConfirmation(mobileNumber, "id")
+
+        confirmationService.sendConfirmation(mobileNumber, "userId")
 
         verify(confirmationMessageMock).send(any(), eq(mobileNumber))
     }

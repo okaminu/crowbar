@@ -1,6 +1,6 @@
 package lt.tlistas.mobile.number.confirmation.service
 
-import lt.tlistas.mobile.number.confirmation.api.exception.InvalidConfirmationCodeException
+import lt.tlistas.mobile.number.confirmation.api.exception.ConfirmationCodeNotFoundException
 import lt.tlistas.mobile.number.confirmation.repository.AuthenticationRepository
 import lt.tlistas.mobile.number.confirmation.repository.ConfirmationRepository
 import lt.tlistas.mobile.number.confirmation.type.entity.Authentication
@@ -11,7 +11,7 @@ class AuthenticationService(private val confirmationRepository: ConfirmationRepo
 
     fun getAuthenticationToken(confirmationCode: String): String {
         if (!confirmationRepository.existsByCode(confirmationCode))
-            throw InvalidConfirmationCodeException()
+            throw ConfirmationCodeNotFoundException()
 
         val confirmation = confirmationRepository.findByCode(confirmationCode)
         confirmationRepository.delete(confirmation)

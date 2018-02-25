@@ -1,10 +1,10 @@
-package lt.tlistas.mobile.number.confirmation.test.confirmation
+package lt.tlistas.mobile.number.confirmation.test.unit.service
 
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
-import lt.tlistas.mobile.number.confirmation.api.exception.InvalidConfirmationCodeException
+import lt.tlistas.mobile.number.confirmation.api.exception.ConfirmationCodeNotFoundException
 import lt.tlistas.mobile.number.confirmation.repository.AuthenticationRepository
 import lt.tlistas.mobile.number.confirmation.repository.ConfirmationRepository
 import lt.tlistas.mobile.number.confirmation.service.AuthenticationService
@@ -42,27 +42,25 @@ class AuthenticationServiceTest {
     }
 
     @Test
-    fun `Returns token on confirmation code validation`() {
-        val code = "123456"
-        doReturn(Confirmation("0asd5as", code))
-                .`when`(confirmationRepositoryMock).findByCode(code)
-        doReturn(true).`when`(confirmationRepositoryMock).existsByCode(code)
+    fun `Returns token if confirmation code is correct`() {
+        doReturn(Confirmation(USER_ID, CONFIRMATION_CODE))
+                .`when`(confirmationRepositoryMock).findByCode(CONFIRMATION_CODE)
+        doReturn(true).`when`(confirmationRepositoryMock).existsByCode(CONFIRMATION_CODE)
 
-        val token = authenticationService.getAuthenticationToken(code)
+        val token = authenticationService.getAuthenticationToken(CONFIRMATION_CODE)
 
         assertFalse(token.isEmpty())
-        verify(confirmationRepositoryMock).delete(any())
-        verify(confirmationRepositoryMock).findByCode(any())
         verify(confirmationRepositoryMock).existsByCode(any())
+        verify(confirmationRepositoryMock).findByCode(any())
+        verify(confirmationRepositoryMock).delete(any())
     }
 
     @Test
-    fun `Throws exception when code is invalid`() {
-        expectedException.expect(InvalidConfirmationCodeException::class.java)
-        val code = "123456"
-        doReturn(false).`when`(confirmationRepositoryMock).existsByCode(code)
+    fun `Throws exception when code is incorrect`() {
+        expectedException.expect(ConfirmationCodeNotFoundException::class.java)
+        doReturn(false).`when`(confirmationRepositoryMock).existsByCode(CONFIRMATION_CODE)
 
-        authenticationService.getAuthenticationToken(code)
+        authenticationService.getAuthenticationToken(CONFIRMATION_CODE)
     }
 
     @Test
@@ -87,24 +85,28 @@ class AuthenticationServiceTest {
 
     @Test
     fun `Checks if token exists`() {
-        val token = "465af4s6d5f4a5"
-        doReturn(true).`when`(authenticationRepositoryMock).existsByToken(token)
+        doReturn(true).`when`(authenticationRepositoryMock).existsByToken(TOKEN)
 
-        val exists = authenticationService.tokenExists(token)
+        val exists = authenticationService.tokenExists(TOKEN)
 
         assertTrue(exists)
-        verify(authenticationRepositoryMock).existsByToken(token)
+        verify(authenticationRepositoryMock).existsByToken(TOKEN)
     }
 
     @Test
     fun `Gets userId by token`() {
-        val token = "sdfsdf55a4sd6af54d"
         val authentication = Authentication()
-        doReturn(authentication).`when`(authenticationRepositoryMock).findByToken(token)
+        doReturn(authentication).`when`(authenticationRepositoryMock).findByToken(TOKEN)
 
-        val userId = authenticationService.getUserId(token)
+        val userId = authenticationService.getUserId(TOKEN)
 
         assertEquals(authentication.id, userId)
-        verify(authenticationRepositoryMock).findByToken(token)
+        verify(authenticationRepositoryMock).findByToken(TOKEN)
+    }
+
+    companion object {
+        private const val USER_ID = "as54sad65f4as6d5f"
+        private const val CONFIRMATION_CODE = "123456"
+        private const val TOKEN = "5d4fa6sd5f4a6sd5f46"
     }
 }

@@ -28,6 +28,6 @@ class ConfirmationService(private val confirmationRepository: ConfirmationReposi
     }
 
     companion object {
-        const val CODE_LENGTH = 6
+        private const val CODE_LENGTH = 6
     }
 }
