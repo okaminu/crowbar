@@ -19,7 +19,7 @@ import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import kotlin.test.assertNotNull
 
-class ConfirmationSteps : En {
+class ConfirmationStep : En {
 
     @Mock
     private lateinit var confirmationMessageGatewayMock: ConfirmationMessageGateway
