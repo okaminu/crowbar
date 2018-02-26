@@ -13,7 +13,7 @@ class ConfirmationService(private val confirmationRepository: ConfirmationReposi
         val code = generate()
         confirmationRepository.save(Confirmation(userId, code))
 
-        confirmationMessageGateway.send(code, mobileNumber)
+        confirmationMessageGateway.send(buildConfirmationMessage(code), mobileNumber)
     }
 
     internal fun generate(): String {
@@ -26,6 +26,8 @@ class ConfirmationService(private val confirmationRepository: ConfirmationReposi
 
         return randomCode
     }
+
+    private fun buildConfirmationMessage(code: String) = "Your validation code is $code."
 
     companion object {
         private const val CODE_LENGTH = 6
