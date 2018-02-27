@@ -1,4 +1,4 @@
-package lt.tlistas.mobile.number.confirmation.test.acceptance.holder
+package lt.tlistas.crowbar.test.acceptance.holder
 
 
 class AuthenticationHolder {

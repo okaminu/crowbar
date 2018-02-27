@@ -1,6 +1,6 @@
-package lt.tlistas.mobile.number.confirmation.repository
+package lt.tlistas.crowbar.repository
 
-import lt.tlistas.mobile.number.confirmation.type.entity.Confirmation
+import lt.tlistas.crowbar.type.entity.Confirmation
 
 interface ConfirmationRepository {
 

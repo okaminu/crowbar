@@ -1,15 +1,15 @@
-package lt.tlistas.mobile.number.confirmation.test.unit.service
+package lt.tlistas.crowbar.test.service
 
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
-import lt.tlistas.mobile.number.confirmation.api.exception.ConfirmationCodeNotFoundException
-import lt.tlistas.mobile.number.confirmation.repository.AuthenticationRepository
-import lt.tlistas.mobile.number.confirmation.repository.ConfirmationRepository
-import lt.tlistas.mobile.number.confirmation.service.AuthenticationService
-import lt.tlistas.mobile.number.confirmation.type.entity.Authentication
-import lt.tlistas.mobile.number.confirmation.type.entity.Confirmation
+import lt.tlistas.crowbar.api.exception.ConfirmationCodeNotFoundException
+import lt.tlistas.crowbar.repository.AuthenticationRepository
+import lt.tlistas.crowbar.repository.ConfirmationRepository
+import lt.tlistas.crowbar.service.AuthenticationService
+import lt.tlistas.crowbar.type.entity.Authentication
+import lt.tlistas.crowbar.type.entity.Confirmation
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

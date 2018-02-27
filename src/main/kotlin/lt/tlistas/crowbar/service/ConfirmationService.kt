@@ -1,8 +1,8 @@
-package lt.tlistas.mobile.number.confirmation.service
+package lt.tlistas.crowbar.service
 
-import lt.tlistas.mobile.number.confirmation.api.ConfirmationMessageGateway
-import lt.tlistas.mobile.number.confirmation.repository.ConfirmationRepository
-import lt.tlistas.mobile.number.confirmation.type.entity.Confirmation
+import lt.tlistas.crowbar.api.ConfirmationMessageGateway
+import lt.tlistas.crowbar.repository.ConfirmationRepository
+import lt.tlistas.crowbar.type.entity.Confirmation
 import java.util.*
 
 class ConfirmationService(private val confirmationRepository: ConfirmationRepository,

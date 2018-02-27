@@ -5,7 +5,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) { publication ->
             groupId 'lt.tlistas'
-            artifactId = 'mobile-number-confirmation'
+            artifactId = 'crowbar'
             version '1.1.1'
             from components.java
 

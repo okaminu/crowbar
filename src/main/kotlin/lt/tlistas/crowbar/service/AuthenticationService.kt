@@ -1,9 +1,9 @@
-package lt.tlistas.mobile.number.confirmation.service
+package lt.tlistas.crowbar.service
 
-import lt.tlistas.mobile.number.confirmation.api.exception.ConfirmationCodeNotFoundException
-import lt.tlistas.mobile.number.confirmation.repository.AuthenticationRepository
-import lt.tlistas.mobile.number.confirmation.repository.ConfirmationRepository
-import lt.tlistas.mobile.number.confirmation.type.entity.Authentication
+import lt.tlistas.crowbar.api.exception.ConfirmationCodeNotFoundException
+import lt.tlistas.crowbar.repository.AuthenticationRepository
+import lt.tlistas.crowbar.repository.ConfirmationRepository
+import lt.tlistas.crowbar.type.entity.Authentication
 import java.util.*
 
 class AuthenticationService(private val confirmationRepository: ConfirmationRepository,

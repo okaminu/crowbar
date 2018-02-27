@@ -1,9 +1,9 @@
-package lt.tlistas.mobile.number.confirmation.test.unit.service
+package lt.tlistas.crowbar.test.service
 
 import com.nhaarman.mockito_kotlin.*
-import lt.tlistas.mobile.number.confirmation.api.ConfirmationMessageGateway
-import lt.tlistas.mobile.number.confirmation.repository.ConfirmationRepository
-import lt.tlistas.mobile.number.confirmation.service.ConfirmationService
+import lt.tlistas.crowbar.api.ConfirmationMessageGateway
+import lt.tlistas.crowbar.repository.ConfirmationRepository
+import lt.tlistas.crowbar.service.ConfirmationService
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

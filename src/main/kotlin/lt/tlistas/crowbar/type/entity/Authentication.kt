@@ -1,4 +1,4 @@
-package lt.tlistas.mobile.number.confirmation.type.entity
+package lt.tlistas.crowbar.type.entity
 
 class Authentication(
 

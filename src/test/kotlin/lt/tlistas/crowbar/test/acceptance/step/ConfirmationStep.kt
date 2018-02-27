@@ -1,4 +1,4 @@
-package lt.tlistas.mobile.number.confirmation.test.acceptance.step
+package lt.tlistas.crowbar.test.acceptance.step
 
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doReturn
@@ -9,12 +9,12 @@ import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then
 import cucumber.api.java.en.When
 import cucumber.api.java8.En
-import lt.tlistas.mobile.number.confirmation.api.ConfirmationMessageGateway
-import lt.tlistas.mobile.number.confirmation.repository.ConfirmationRepository
-import lt.tlistas.mobile.number.confirmation.service.AuthenticationService
-import lt.tlistas.mobile.number.confirmation.service.ConfirmationService
-import lt.tlistas.mobile.number.confirmation.type.entity.Confirmation
-import lt.tlistas.mobile.number.confirmation.test.acceptance.holder.AuthenticationHolder
+import lt.tlistas.crowbar.api.ConfirmationMessageGateway
+import lt.tlistas.crowbar.repository.ConfirmationRepository
+import lt.tlistas.crowbar.service.AuthenticationService
+import lt.tlistas.crowbar.service.ConfirmationService
+import lt.tlistas.crowbar.type.entity.Confirmation
+import lt.tlistas.crowbar.test.acceptance.holder.AuthenticationHolder
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import kotlin.test.assertNotNull
