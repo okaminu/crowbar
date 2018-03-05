@@ -34,7 +34,7 @@ class ConfirmationServiceTest {
     }
 
     @Test
-    fun `Sends confirmation code to the collaborator's number`() {
+    fun `Sends confirmation code to the collaborator's address`() {
         val address = "+3712345678"
 
         confirmationService.sendConfirmation(address, "userId")

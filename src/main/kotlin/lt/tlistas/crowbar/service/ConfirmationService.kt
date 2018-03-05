@@ -9,11 +9,11 @@ class ConfirmationService(private val confirmationRepository: ConfirmationReposi
                           private val confirmationMessageGateway: ConfirmationMessageGateway) {
 
 
-    fun sendConfirmation(mobileNumber: String, userId: String) {
+    fun sendConfirmation(address: String, userId: String) {
         val code = generate()
         confirmationRepository.save(Confirmation(userId, code))
 
-        confirmationMessageGateway.send(buildConfirmationMessage(code), mobileNumber)
+        confirmationMessageGateway.send(buildConfirmationMessage(code), address)
     }
 
     internal fun generate(): String {
