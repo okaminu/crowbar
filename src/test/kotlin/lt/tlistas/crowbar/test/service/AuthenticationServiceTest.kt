@@ -4,7 +4,7 @@ import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
-import lt.tlistas.crowbar.api.exception.ConfirmationCodeNotFoundException
+import lt.tlistas.crowbar.exception.ConfirmationCodeNotFoundException
 import lt.tlistas.crowbar.repository.AuthenticationRepository
 import lt.tlistas.crowbar.repository.ConfirmationRepository
 import lt.tlistas.crowbar.service.AuthenticationService

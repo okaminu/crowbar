@@ -1,6 +1,6 @@
 package lt.tlistas.crowbar.service
 
-import lt.tlistas.crowbar.api.exception.ConfirmationCodeNotFoundException
+import lt.tlistas.crowbar.exception.ConfirmationCodeNotFoundException
 import lt.tlistas.crowbar.repository.AuthenticationRepository
 import lt.tlistas.crowbar.repository.ConfirmationRepository
 import lt.tlistas.crowbar.type.entity.Authentication
