@@ -1,3 +1,4 @@
+![Alt text](logo.jpg?raw=true)
 # Crowbar
 
 Crowbar is an extensible library, which helps to authenticate user via preferred provider and method of your choice (email, SMS, etc.).  
