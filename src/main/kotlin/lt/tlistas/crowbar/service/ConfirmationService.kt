@@ -1,35 +1,35 @@
 package lt.tlistas.crowbar.service
 
-import lt.tlistas.crowbar.api.ConfirmationMessageGateway
+import lt.tlistas.crowbar.exception.ConfirmationCodeNotFoundException
 import lt.tlistas.crowbar.repository.ConfirmationRepository
+import lt.tlistas.crowbar.repository.RequestRepository
 import lt.tlistas.crowbar.type.entity.Confirmation
 import java.util.*
 
-class ConfirmationService(private val confirmationRepository: ConfirmationRepository,
-                          private val confirmationMessageGateway: ConfirmationMessageGateway) {
+class ConfirmationService(private val requestRepository: RequestRepository,
+                          private val confirmationRepository: ConfirmationRepository) {
 
+    fun confirmCode(confirmationCode: String): String {
+        if (!requestRepository.existsByCode(confirmationCode))
+            throw ConfirmationCodeNotFoundException()
 
-    fun sendConfirmation(address: String, userId: String) {
-        val code = generate()
-        confirmationRepository.save(Confirmation(userId, code))
+        val confirmation = requestRepository.findByCode(confirmationCode)
+        requestRepository.delete(confirmation)
 
-        confirmationMessageGateway.send(buildConfirmationMessage(code), address)
+        val token = generate()
+        confirmationRepository.save(Confirmation(confirmation.id!!, token))
+
+        return token
     }
+
+    fun getUserId(token: String) = confirmationRepository.findByToken(token).id
+
+    fun tokenExists(token: String) = confirmationRepository.existsByToken(token)
 
     internal fun generate(): String {
-        var randomCode = ""
-        repeat(CODE_LENGTH) {
-            randomCode += Random().nextInt(10).toString()
-        }
-        if (confirmationRepository.existsByCode(randomCode))
+        val token = UUID.randomUUID().toString()
+        if (tokenExists(token))
             generate()
-
-        return randomCode
-    }
-
-    private fun buildConfirmationMessage(code: String) = "Your validation code is $code."
-
-    companion object {
-        private const val CODE_LENGTH = 6
+        return token
     }
 }

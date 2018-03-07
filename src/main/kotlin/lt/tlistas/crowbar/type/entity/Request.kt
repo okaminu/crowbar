@@ -1,9 +1,9 @@
 package lt.tlistas.crowbar.type.entity
 
-class Authentication(
+class Request(
 
         var id: String? = "",
 
-        var token: String = ""
+        var code: String = ""
 
 )

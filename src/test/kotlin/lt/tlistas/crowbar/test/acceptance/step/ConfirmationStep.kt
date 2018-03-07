@@ -10,11 +10,12 @@ import cucumber.api.java.en.Then
 import cucumber.api.java.en.When
 import cucumber.api.java8.En
 import lt.tlistas.crowbar.api.ConfirmationMessageGateway
-import lt.tlistas.crowbar.repository.ConfirmationRepository
-import lt.tlistas.crowbar.service.AuthenticationService
+import lt.tlistas.crowbar.repository.RequestRepository
 import lt.tlistas.crowbar.service.ConfirmationService
-import lt.tlistas.crowbar.type.entity.Confirmation
+import lt.tlistas.crowbar.service.RequestService
 import lt.tlistas.crowbar.test.acceptance.holder.AuthenticationHolder
+import lt.tlistas.crowbar.test.acceptance.holder.UserHolder
+import lt.tlistas.crowbar.type.entity.Request
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import kotlin.test.assertNotNull
@@ -25,39 +26,45 @@ class ConfirmationStep : En {
     private lateinit var confirmationMessageGatewayMock: ConfirmationMessageGateway
 
     @Mock
-    private lateinit var confirmationRepositoryMock: ConfirmationRepository
+    private lateinit var requestRepositoryMock: RequestRepository
 
     private lateinit var authenticationHolder: AuthenticationHolder
 
-    private lateinit var confirmationService: ConfirmationService
+    private lateinit var userHolder: UserHolder
 
-    private lateinit var authenticationService: AuthenticationService
+    private lateinit var requestService: RequestService
+
+    private lateinit var confirmationService: ConfirmationService
 
     @Before
     fun `Set up`() {
         MockitoAnnotations.initMocks(this)
         authenticationHolder = AuthenticationHolder()
-        confirmationService = ConfirmationService(mock(), confirmationMessageGatewayMock)
-        authenticationService = AuthenticationService(confirmationRepositoryMock, mock())
+        userHolder = UserHolder()
+        requestService = RequestService(mock(), confirmationMessageGatewayMock)
+        confirmationService = ConfirmationService(requestRepositoryMock, mock())
 
     }
 
     @Given("^user exists$")
     fun `user exists`() {
-        authenticationHolder.userId = USER_ID
+        userHolder.userId = USER_ID
     }
 
     @When("^I provide confirmation address$")
     fun `I provide confirmation address`() {
-        confirmationService.sendConfirmation(ADDRESS, authenticationHolder.userId!!)
+        requestService.sendConfirmation(ADDRESS, userHolder.userId!!)
     }
 
     @When("^I provide correct confirmation code$")
     fun `I provide correct confirmation code`() {
-        doReturn(true).`when`(confirmationRepositoryMock).existsByCode(CONFIRMATION_CODE)
-        doReturn(Confirmation()).`when`(confirmationRepositoryMock).findByCode(CONFIRMATION_CODE)
+        doReturn(true).`when`(requestRepositoryMock).existsByCode(CONFIRMATION_CODE)
+        doReturn(Request()).`when`(requestRepositoryMock).findByCode(CONFIRMATION_CODE)
 
-        authenticationHolder.token = authenticationService.getAuthenticationToken(CONFIRMATION_CODE)
+        authenticationHolder.apply {
+            userId = userHolder.userId
+            token = confirmationService.confirmCode(CONFIRMATION_CODE)
+        }
     }
 
     @Then("^user is confirmed$")

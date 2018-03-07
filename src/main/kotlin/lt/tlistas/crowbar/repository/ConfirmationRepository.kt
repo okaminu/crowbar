@@ -4,11 +4,9 @@ import lt.tlistas.crowbar.type.entity.Confirmation
 
 interface ConfirmationRepository {
 
-    fun save(confirmation: Confirmation)
+    fun save(authentication: Confirmation)
 
-    fun delete(confirmation: Confirmation)
+    fun existsByToken(token: String): Boolean
 
-    fun existsByCode(confirmationCode: String): Boolean
-
-    fun findByCode(confirmationCode: String): Confirmation
+    fun findByToken(token: String): Confirmation
 }

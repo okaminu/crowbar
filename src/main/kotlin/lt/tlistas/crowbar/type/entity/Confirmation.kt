@@ -4,6 +4,6 @@ class Confirmation(
 
         var id: String? = "",
 
-        var code: String = ""
+        var token: String = ""
 
 )
