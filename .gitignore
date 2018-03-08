@@ -12,5 +12,9 @@ pids
 *.pid
 *.seed
 
+# Gradle
+.gradle
+build/
+
 /target/
 /src/main/resources/debug/
