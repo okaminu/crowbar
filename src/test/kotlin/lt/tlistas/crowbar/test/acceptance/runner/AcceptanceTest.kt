@@ -8,5 +8,5 @@ import org.junit.runner.RunWith
 @CucumberOptions(
         format = arrayOf("progress"),
         features = arrayOf("src/test/resources/feature"),
-        glue = arrayOf("lt.tlistas.mobile.number.confirmation.test.acceptance.step"))
+        glue = arrayOf("lt.tlistas.crowbar.test.acceptance.step"))
 class AcceptanceTest
