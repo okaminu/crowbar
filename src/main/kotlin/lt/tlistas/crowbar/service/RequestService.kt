@@ -8,7 +8,7 @@ import java.util.*
 class RequestService(private val requestRepository: RequestRepository,
                      private val confirmationMessageGateway: ConfirmationMessageGateway) {
 
-    fun sendConfirmation(address: String, userId: String) {
+    fun sendConfirmation(userId: String, address: String) {
         val code = generate()
         requestRepository.save(Request(userId, code))
 
