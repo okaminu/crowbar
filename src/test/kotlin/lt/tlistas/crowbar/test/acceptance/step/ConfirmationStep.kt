@@ -67,7 +67,7 @@ class ConfirmationStep : En {
         }
     }
 
-    @Then("^user is confirmed$")
+    @Then("^user identity is confirmed$")
     fun `user is confirmed`() {
         assertNotNull(authenticationHolder.token)
     }
