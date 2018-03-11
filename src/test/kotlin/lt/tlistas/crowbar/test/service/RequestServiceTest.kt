@@ -37,7 +37,7 @@ class RequestServiceTest {
     fun `Sends confirmation code to the user's address`() {
         val address = "+3712345678"
 
-        requestService.sendConfirmation(address, "userId")
+        requestService.sendConfirmation("userId", address)
 
         verify(confirmationMessageMock).send(any(), eq(address))
     }

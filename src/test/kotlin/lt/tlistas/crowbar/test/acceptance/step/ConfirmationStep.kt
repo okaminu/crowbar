@@ -53,7 +53,7 @@ class ConfirmationStep : En {
 
     @When("^I provide confirmation address$")
     fun `I provide confirmation address`() {
-        requestService.sendConfirmation(ADDRESS, userHolder.userId!!)
+        requestService.sendConfirmation(userHolder.userId!!, ADDRESS)
     }
 
     @When("^I provide correct confirmation code$")
