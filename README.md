@@ -26,7 +26,7 @@ Crowbar is an extensible library, which helps to authenticate user via preferred
 
 
 ### Usage
-* Implement *RequestRepository* and *ConfirmationRepository* with you own choice of database.
+* Implement *RequestRepository* and *ConfirmationRepository* with your own choice of database.
 
 Example with Spring Data MongoDB:
 ```
@@ -54,7 +54,7 @@ class YourGatewayAdapter() : ConfirmationMessageGateway {
 ```
 requestService.sendConfirmation(address, userId)
 ```
-* Authenticate user by providing the confirmation code. It returns a token which identifies an unique user:
+* Authenticate user by providing the confirmation code. It returns a token which identifies a unique user:
 ```
 val token = confirmationService.confirmCode(confirmationCode)
 ```
@@ -63,6 +63,5 @@ val token = confirmationService.confirmCode(confirmationCode)
 *ConfirmationCodeNotFoundException* – runtime exception, thrown when a confirmation code, provided by the user, is not found in the request repository.
 
 ### License
-
 
 This library is licensed under MIT. Full license text is available in [LICENSE](https://github.com/tlistas/Crowbar/blob/TLIST-466-mobile-confirmation/LICENSE.txt).
