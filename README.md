@@ -63,3 +63,6 @@ val token = confirmationService.confirmCode(confirmationCode)
 *ConfirmationCodeNotFoundException* – runtime exception, thrown when a confirmation code, provided by the user, is not found in the request repository.
 
 ### License
+
+
+This library is licensed under MIT. Full license text is available in [LICENSE](https://github.com/tlistas/Crowbar/blob/TLIST-466-mobile-confirmation/LICENSE.txt).
