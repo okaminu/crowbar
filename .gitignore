@@ -3,18 +3,9 @@
 *.iml
 out
 gen
-# Logs
-logs
-*.log
-
-# Runtime data
-pids
-*.pid
-*.seed
 
 # Gradle
 .gradle
 build/
-
-/target/
-/src/main/resources/debug/
+local.properties
+gradle.properties
