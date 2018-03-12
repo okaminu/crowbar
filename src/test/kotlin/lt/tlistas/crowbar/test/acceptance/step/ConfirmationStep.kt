@@ -11,7 +11,7 @@ import cucumber.api.java.en.When
 import cucumber.api.java8.En
 import lt.tlistas.crowbar.api.ConfirmationMessageGateway
 import lt.tlistas.crowbar.repository.RequestRepository
-import lt.tlistas.crowbar.service.RequestService
+import lt.tlistas.crowbar.service.ConfirmationCodeSender
 import lt.tlistas.crowbar.service.TokenService
 import lt.tlistas.crowbar.test.acceptance.holder.AuthenticationHolder
 import lt.tlistas.crowbar.test.acceptance.holder.UserHolder
@@ -32,7 +32,7 @@ class ConfirmationStep : En {
 
     private lateinit var userHolder: UserHolder
 
-    private lateinit var requestService: RequestService
+    private lateinit var confirmationCodeSender: ConfirmationCodeSender
 
     private lateinit var tokenService: TokenService
 
@@ -41,7 +41,7 @@ class ConfirmationStep : En {
         MockitoAnnotations.initMocks(this)
         authenticationHolder = AuthenticationHolder()
         userHolder = UserHolder()
-        requestService = RequestService(mock(), confirmationMessageGatewayMock)
+        confirmationCodeSender = ConfirmationCodeSender(mock(), confirmationMessageGatewayMock)
         tokenService = TokenService(requestRepositoryMock, mock())
 
     }
@@ -53,7 +53,7 @@ class ConfirmationStep : En {
 
     @When("^I provide confirmation address$")
     fun `I provide confirmation address`() {
-        requestService.sendConfirmation(userHolder.userId!!, ADDRESS)
+        confirmationCodeSender.sendConfirmation(userHolder.userId!!, ADDRESS)
     }
 
     @When("^I provide correct confirmation code$")

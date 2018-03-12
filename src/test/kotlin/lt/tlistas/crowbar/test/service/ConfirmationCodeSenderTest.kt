@@ -3,7 +3,7 @@ package lt.tlistas.crowbar.test.service
 import com.nhaarman.mockito_kotlin.*
 import lt.tlistas.crowbar.api.ConfirmationMessageGateway
 import lt.tlistas.crowbar.repository.RequestRepository
-import lt.tlistas.crowbar.service.RequestService
+import lt.tlistas.crowbar.service.ConfirmationCodeSender
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -14,7 +14,7 @@ import org.mockito.junit.MockitoJUnitRunner
 import kotlin.test.assertTrue
 
 @RunWith(MockitoJUnitRunner::class)
-class RequestServiceTest {
+class ConfirmationCodeSenderTest {
 
     @Mock
     private lateinit var requestRepositoryMock: RequestRepository
@@ -22,7 +22,7 @@ class RequestServiceTest {
     @Mock
     private lateinit var confirmationMessageMock: ConfirmationMessageGateway
 
-    private lateinit var requestService: RequestService
+    private lateinit var confirmationCodeSender: ConfirmationCodeSender
 
     @Rule
     @JvmField
@@ -30,14 +30,14 @@ class RequestServiceTest {
 
     @Before
     fun `Set up`() {
-        requestService = RequestService(requestRepositoryMock, confirmationMessageMock)
+        confirmationCodeSender = ConfirmationCodeSender(requestRepositoryMock, confirmationMessageMock)
     }
 
     @Test
     fun `Sends confirmation code to the user's address`() {
         val address = "+3712345678"
 
-        requestService.sendConfirmation("userId", address)
+        confirmationCodeSender.sendConfirmation("userId", address)
 
         verify(confirmationMessageMock).send(any(), eq(address))
     }
@@ -46,7 +46,7 @@ class RequestServiceTest {
     fun `Generates confirmation code`() {
         doReturn(false).`when`(requestRepositoryMock).existsByCode(any())
 
-        assertTrue(requestService.generate().length == 6)
+        assertTrue(confirmationCodeSender.generate().length == 6)
         verify(requestRepositoryMock).existsByCode(any())
     }
 
@@ -54,7 +54,7 @@ class RequestServiceTest {
     fun `Generates confirmation code until unique one is found`() {
         doReturn(true).doReturn(false).`when`(requestRepositoryMock).existsByCode(any())
 
-        assertTrue(requestService.generate().length == 6)
+        assertTrue(confirmationCodeSender.generate().length == 6)
         verify(requestRepositoryMock, times(2)).existsByCode(any())
     }
 }

@@ -5,8 +5,8 @@ import lt.tlistas.crowbar.repository.RequestRepository
 import lt.tlistas.crowbar.type.entity.Request
 import java.util.*
 
-class RequestService(private val requestRepository: RequestRepository,
-                     private val confirmationMessageGateway: ConfirmationMessageGateway) {
+class ConfirmationCodeSender(private val requestRepository: RequestRepository,
+                             private val confirmationMessageGateway: ConfirmationMessageGateway) {
 
     fun sendConfirmation(userId: String, address: String) {
         val code = generate()
