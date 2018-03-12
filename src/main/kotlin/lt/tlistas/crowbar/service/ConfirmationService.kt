@@ -1,6 +1,6 @@
 package lt.tlistas.crowbar.service
 
-import lt.tlistas.crowbar.exception.ConfirmationCodeNotFoundException
+import lt.tlistas.crowbar.exception.IncorrectConfirmationCodeException
 import lt.tlistas.crowbar.repository.ConfirmationRepository
 import lt.tlistas.crowbar.repository.RequestRepository
 import lt.tlistas.crowbar.type.entity.Confirmation
@@ -11,7 +11,7 @@ class ConfirmationService(private val requestRepository: RequestRepository,
 
     fun confirmCode(confirmationCode: String): String {
         if (!requestRepository.existsByCode(confirmationCode))
-            throw ConfirmationCodeNotFoundException()
+            throw IncorrectConfirmationCodeException()
 
         val confirmation = requestRepository.findByCode(confirmationCode)
         requestRepository.delete(confirmation)

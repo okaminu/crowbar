@@ -4,7 +4,7 @@ import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
-import lt.tlistas.crowbar.exception.ConfirmationCodeNotFoundException
+import lt.tlistas.crowbar.exception.IncorrectConfirmationCodeException
 import lt.tlistas.crowbar.repository.ConfirmationRepository
 import lt.tlistas.crowbar.repository.RequestRepository
 import lt.tlistas.crowbar.service.ConfirmationService
@@ -56,7 +56,7 @@ class AuthenticationServiceTest {
 
     @Test
     fun `Throws exception when confirmation code is incorrect`() {
-        expectedException.expect(ConfirmationCodeNotFoundException::class.java)
+        expectedException.expect(IncorrectConfirmationCodeException::class.java)
         doReturn(false).`when`(requestRepositoryMock).existsByCode(CONFIRMATION_CODE)
 
         confirmationService.confirmCode(CONFIRMATION_CODE)
