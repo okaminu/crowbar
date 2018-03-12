@@ -7,7 +7,7 @@ import com.nhaarman.mockito_kotlin.verify
 import lt.tlistas.crowbar.exception.IncorrectConfirmationCodeException
 import lt.tlistas.crowbar.repository.ConfirmationRepository
 import lt.tlistas.crowbar.repository.RequestRepository
-import lt.tlistas.crowbar.service.ConfirmationService
+import lt.tlistas.crowbar.service.TokenService
 import lt.tlistas.crowbar.type.entity.Confirmation
 import lt.tlistas.crowbar.type.entity.Request
 import org.junit.Before
@@ -21,7 +21,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 @RunWith(MockitoJUnitRunner::class)
-class AuthenticationServiceTest {
+class TokenServiceTest {
 
     @Mock
     private lateinit var requestRepositoryMock: RequestRepository
@@ -29,7 +29,7 @@ class AuthenticationServiceTest {
     @Mock
     private lateinit var confirmationRepositoryMock: ConfirmationRepository
 
-    private lateinit var confirmationService: ConfirmationService
+    private lateinit var tokenService: TokenService
 
     @Rule
     @JvmField
@@ -37,7 +37,7 @@ class AuthenticationServiceTest {
 
     @Before
     fun `Set up`() {
-        confirmationService = ConfirmationService(requestRepositoryMock, confirmationRepositoryMock)
+        tokenService = TokenService(requestRepositoryMock, confirmationRepositoryMock)
     }
 
     @Test
@@ -46,7 +46,7 @@ class AuthenticationServiceTest {
                 .`when`(requestRepositoryMock).findByCode(CONFIRMATION_CODE)
         doReturn(true).`when`(requestRepositoryMock).existsByCode(CONFIRMATION_CODE)
 
-        val token = confirmationService.confirmCode(CONFIRMATION_CODE)
+        val token = tokenService.confirmCode(CONFIRMATION_CODE)
 
         assertTrue(token.isNotEmpty())
         verify(requestRepositoryMock).existsByCode(any())
@@ -59,14 +59,14 @@ class AuthenticationServiceTest {
         expectedException.expect(IncorrectConfirmationCodeException::class.java)
         doReturn(false).`when`(requestRepositoryMock).existsByCode(CONFIRMATION_CODE)
 
-        confirmationService.confirmCode(CONFIRMATION_CODE)
+        tokenService.confirmCode(CONFIRMATION_CODE)
     }
 
     @Test
     fun `Generates token`() {
         doReturn(false).`when`(confirmationRepositoryMock).existsByToken(any())
 
-        val token = confirmationService.generate()
+        val token = tokenService.generate()
 
         verify(confirmationRepositoryMock).existsByToken(any())
         assertTrue(token.length == 36)
@@ -76,7 +76,7 @@ class AuthenticationServiceTest {
     fun `Generates token until unique one is found`() {
         doReturn(true).doReturn(false).`when`(confirmationRepositoryMock).existsByToken(any())
 
-        val token = confirmationService.generate()
+        val token = tokenService.generate()
 
         verify(confirmationRepositoryMock, times(2)).existsByToken(any())
         assertTrue(token.length == 36)
@@ -86,7 +86,7 @@ class AuthenticationServiceTest {
     fun `Checks if token exists`() {
         doReturn(true).`when`(confirmationRepositoryMock).existsByToken(TOKEN)
 
-        val exists = confirmationService.tokenExists(TOKEN)
+        val exists = tokenService.tokenExists(TOKEN)
 
         assertTrue(exists)
         verify(confirmationRepositoryMock).existsByToken(TOKEN)
@@ -97,7 +97,7 @@ class AuthenticationServiceTest {
         val authentication = Confirmation()
         doReturn(authentication).`when`(confirmationRepositoryMock).findByToken(TOKEN)
 
-        val userId = confirmationService.getUserId(TOKEN)
+        val userId = tokenService.getUserId(TOKEN)
 
         assertEquals(authentication.id, userId)
         verify(confirmationRepositoryMock).findByToken(TOKEN)

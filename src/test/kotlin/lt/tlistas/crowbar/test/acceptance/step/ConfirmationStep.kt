@@ -11,8 +11,8 @@ import cucumber.api.java.en.When
 import cucumber.api.java8.En
 import lt.tlistas.crowbar.api.ConfirmationMessageGateway
 import lt.tlistas.crowbar.repository.RequestRepository
-import lt.tlistas.crowbar.service.ConfirmationService
 import lt.tlistas.crowbar.service.RequestService
+import lt.tlistas.crowbar.service.TokenService
 import lt.tlistas.crowbar.test.acceptance.holder.AuthenticationHolder
 import lt.tlistas.crowbar.test.acceptance.holder.UserHolder
 import lt.tlistas.crowbar.type.entity.Request
@@ -34,7 +34,7 @@ class ConfirmationStep : En {
 
     private lateinit var requestService: RequestService
 
-    private lateinit var confirmationService: ConfirmationService
+    private lateinit var tokenService: TokenService
 
     @Before
     fun `Set up`() {
@@ -42,7 +42,7 @@ class ConfirmationStep : En {
         authenticationHolder = AuthenticationHolder()
         userHolder = UserHolder()
         requestService = RequestService(mock(), confirmationMessageGatewayMock)
-        confirmationService = ConfirmationService(requestRepositoryMock, mock())
+        tokenService = TokenService(requestRepositoryMock, mock())
 
     }
 
@@ -63,7 +63,7 @@ class ConfirmationStep : En {
 
         authenticationHolder.apply {
             userId = userHolder.userId
-            token = confirmationService.confirmCode(CONFIRMATION_CODE)
+            token = tokenService.confirmCode(CONFIRMATION_CODE)
         }
     }
 

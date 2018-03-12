@@ -6,8 +6,8 @@ import lt.tlistas.crowbar.repository.RequestRepository
 import lt.tlistas.crowbar.type.entity.Confirmation
 import java.util.*
 
-class ConfirmationService(private val requestRepository: RequestRepository,
-                          private val confirmationRepository: ConfirmationRepository) {
+class TokenService(private val requestRepository: RequestRepository,
+                   private val confirmationRepository: ConfirmationRepository) {
 
     fun confirmCode(confirmationCode: String): String {
         if (!requestRepository.existsByCode(confirmationCode))
