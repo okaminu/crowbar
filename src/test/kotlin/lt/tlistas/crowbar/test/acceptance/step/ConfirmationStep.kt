@@ -10,12 +10,12 @@ import cucumber.api.java.en.Then
 import cucumber.api.java.en.When
 import cucumber.api.java8.En
 import lt.tlistas.crowbar.api.ConfirmationMessageGateway
-import lt.tlistas.crowbar.repository.RequestRepository
+import lt.tlistas.crowbar.repository.ConfirmationCodeRepository
 import lt.tlistas.crowbar.service.ConfirmationCodeSender
 import lt.tlistas.crowbar.service.TokenService
 import lt.tlistas.crowbar.test.acceptance.holder.AuthenticationHolder
 import lt.tlistas.crowbar.test.acceptance.holder.UserHolder
-import lt.tlistas.crowbar.type.entity.Request
+import lt.tlistas.crowbar.type.entity.ConfirmationCode
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import kotlin.test.assertNotNull
@@ -26,7 +26,7 @@ class ConfirmationStep : En {
     private lateinit var confirmationMessageGatewayMock: ConfirmationMessageGateway
 
     @Mock
-    private lateinit var requestRepositoryMock: RequestRepository
+    private lateinit var confirmationCodeRepositoryMock: ConfirmationCodeRepository
 
     private lateinit var authenticationHolder: AuthenticationHolder
 
@@ -42,7 +42,7 @@ class ConfirmationStep : En {
         authenticationHolder = AuthenticationHolder()
         userHolder = UserHolder()
         confirmationCodeSender = ConfirmationCodeSender(mock(), confirmationMessageGatewayMock)
-        tokenService = TokenService(requestRepositoryMock, mock())
+        tokenService = TokenService(confirmationCodeRepositoryMock, mock())
 
     }
 
@@ -58,8 +58,8 @@ class ConfirmationStep : En {
 
     @When("^I provide correct confirmation code$")
     fun `I provide correct confirmation code`() {
-        doReturn(true).`when`(requestRepositoryMock).existsByCode(CONFIRMATION_CODE)
-        doReturn(Request()).`when`(requestRepositoryMock).findByCode(CONFIRMATION_CODE)
+        doReturn(true).`when`(confirmationCodeRepositoryMock).existsByCode(CONFIRMATION_CODE)
+        doReturn(ConfirmationCode()).`when`(confirmationCodeRepositoryMock).findByCode(CONFIRMATION_CODE)
 
         authenticationHolder.apply {
             userId = userHolder.userId

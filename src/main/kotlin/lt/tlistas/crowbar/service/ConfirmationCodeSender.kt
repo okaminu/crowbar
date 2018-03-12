@@ -1,16 +1,16 @@
 package lt.tlistas.crowbar.service
 
 import lt.tlistas.crowbar.api.ConfirmationMessageGateway
-import lt.tlistas.crowbar.repository.RequestRepository
-import lt.tlistas.crowbar.type.entity.Request
+import lt.tlistas.crowbar.repository.ConfirmationCodeRepository
+import lt.tlistas.crowbar.type.entity.ConfirmationCode
 import java.util.*
 
-class ConfirmationCodeSender(private val requestRepository: RequestRepository,
+class ConfirmationCodeSender(private val confirmationCodeRepository: ConfirmationCodeRepository,
                              private val confirmationMessageGateway: ConfirmationMessageGateway) {
 
     fun send(userId: String, address: String) {
         val code = generate()
-        requestRepository.save(Request(userId, code))
+        confirmationCodeRepository.save(ConfirmationCode(userId, code))
 
         confirmationMessageGateway.send(buildConfirmationMessage(code), address)
     }
@@ -20,7 +20,7 @@ class ConfirmationCodeSender(private val requestRepository: RequestRepository,
         repeat(CODE_LENGTH) {
             randomCode += Random().nextInt(10).toString()
         }
-        if (requestRepository.existsByCode(randomCode))
+        if (confirmationCodeRepository.existsByCode(randomCode))
             generate()
 
         return randomCode

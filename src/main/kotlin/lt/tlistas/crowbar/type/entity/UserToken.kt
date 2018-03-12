@@ -1,6 +1,6 @@
 package lt.tlistas.crowbar.type.entity
 
-class Confirmation(
+class UserToken(
 
         var id: String? = "",
 
