@@ -8,7 +8,7 @@ import java.util.*
 class ConfirmationCodeSender(private val requestRepository: RequestRepository,
                              private val confirmationMessageGateway: ConfirmationMessageGateway) {
 
-    fun sendConfirmation(userId: String, address: String) {
+    fun send(userId: String, address: String) {
         val code = generate()
         requestRepository.save(Request(userId, code))
 

@@ -37,7 +37,7 @@ class ConfirmationCodeSenderTest {
     fun `Sends confirmation code to the user's address`() {
         val address = "+3712345678"
 
-        confirmationCodeSender.sendConfirmation("userId", address)
+        confirmationCodeSender.send("userId", address)
 
         verify(confirmationMessageMock).send(any(), eq(address))
     }
