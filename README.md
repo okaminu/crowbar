@@ -26,17 +26,20 @@ Crowbar is an extensible library, which helps to authenticate user via preferred
 
 
 ### Usage
-* Implement *RequestRepository* and *ConfirmationRepository* with your own choice of database.
+* Implement *UserTokenRepository* and *UserConfirmationCodeRepository* with your own choice of database.
 
 Example with Spring Data MongoDB:
 ```
-interface ConfirmationMongoRepository : ConfirmationRepository, MongoRepository<Confirmation, String> {
+interface UserConfirmationCodeMongoRepository
+    : UserConfirmationCodeRepository, MongoRepository<UserConfirmationCode, String> {
 
-    override fun save(authentication: Confirmation)
+    override fun save(code: UserConfirmationCode)
 
-    override fun existsByToken(token: String): Boolean
+    override fun deleteByCode(id: String)
 
-    override fun findByToken(token: String): Confirmation
+    override fun existsByCode(code: String): Boolean
+
+    override fun findByCode(code: String): UserConfirmationCode
 }
 ```
 * Implement *ConfirmationMessageGateway* from Crowbar API with a preferred message delivery provider
@@ -45,23 +48,23 @@ Example:
 ```
 class YourGatewayAdapter() : ConfirmationMessageGateway {
 
-    override fun send(message: String, mobileNumber: String) {
+    override fun send(message: String, address: String) {
         //implementation
     }
 ```
 *  Classes which implement *repositories* and *ConfirmationMessageGateway* are provided during runtime, favorite DI tool should be used.
 * Request confirmation code by providing an address, where confirmation code should be sent and user ID:
 ```
-requestService.sendConfirmation(address, userId)
+identityConfirmation.sendConfirmationCode(userId, address)
 ```
-* Authenticate user by providing the confirmation code. It returns a token which identifies a unique user:
+* Confirm user by providing the correct confirmation code. It returns a token which identifies a unique user:
 ```
-val token = tokenService.confirmCode(userConfirmationCode)
+identityConfirmation.confirmCode(userConfirmationCode)
 ```
-### Exception handling
-
-*ConfirmationCodeNotFoundException* – runtime exception, thrown when a confirmation code, provided by the user, is not found in the request repository.
-
+* Retrieve authentication token by providing user`s ID
+```
+val token = identityConfirmation.getTokenById(userId: String)
+```
 ### License
 
 This library is licensed under MIT. Full license text is available in [LICENSE](https://github.com/tlistas/Crowbar/blob/TLIST-466-mobile-confirmation/LICENSE.txt).
