@@ -21,4 +21,10 @@ class TokenGenerator(private val userTokenRepository: UserTokenRepository) {
     }
 
     private fun generate() = UUID.randomUUID().toString()
+
+    fun getTokenById(userId: String) = userTokenRepository.findById(userId).get().token
+
+    fun getUserIdByToken(userId: String) = userTokenRepository.findByToken(userId).id
+
+    fun doesTokenExist(token: String) = userTokenRepository.existsByToken(token)
 }

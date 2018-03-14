@@ -9,11 +9,9 @@ import lt.tlistas.crowbar.api.ConfirmationMessageGateway
 import lt.tlistas.crowbar.generator.ConfirmationCodeGenerator
 import lt.tlistas.crowbar.generator.TokenGenerator
 import lt.tlistas.crowbar.repository.UserConfirmationCodeRepository
-import lt.tlistas.crowbar.repository.UserTokenRepository
+import lt.tlistas.crowbar.test.unit.generator.TokenGeneratorTest
 import lt.tlistas.crowbar.type.entity.UserConfirmationCode
-import lt.tlistas.crowbar.type.entity.UserToken
 import org.junit.Assert.assertSame
-import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -25,9 +23,6 @@ import java.util.*
 
 @RunWith(MockitoJUnitRunner::class)
 class IdentityConfirmationTest {
-
-    @Mock
-    private lateinit var tokenRepositoryMock: UserTokenRepository
 
     @Mock
     private lateinit var codeRepositoryMock: UserConfirmationCodeRepository
@@ -49,7 +44,7 @@ class IdentityConfirmationTest {
     @Before
     fun `Set up`() {
         identityConfirmationService = IdentityConfirmation(
-            codeRepositoryMock, tokenRepositoryMock,
+            codeRepositoryMock,
             messageGateway, codeGeneratorMock, tokenGeneratorMock
         )
     }
@@ -84,51 +79,50 @@ class IdentityConfirmationTest {
     }
 
     @Test
-    fun `Checks if token exists`() {
-        doReturn(true).`when`(tokenRepositoryMock).existsByToken(TOKEN)
-
-        assertTrue(identityConfirmationService.doesTokenExist(TOKEN))
-        verify(tokenRepositoryMock).existsByToken(TOKEN)
-    }
-
-    @Test
     fun `Checks if user exists`() {
         doReturn(true).`when`(codeRepositoryMock).existsByCode(CODE)
 
-        assertTrue(identityConfirmationService.doesUserByCodeExist(CODE))
+        kotlin.test.assertTrue(identityConfirmationService.doesUserByCodeExist(CODE))
         verify(codeRepositoryMock).existsByCode(CODE)
     }
 
     @Test
-    fun `Gets token by user id`() {
-        doReturn(Optional.of(UserToken(USER_ID, TOKEN))).`when`(tokenRepositoryMock).findById(USER_ID)
+    fun `Gets user id by confirmation code`() {
+        doReturn(UserConfirmationCode(TokenGeneratorTest.USER_ID, CODE)).`when`(codeRepositoryMock).findByCode(CODE)
 
-        val responseToken = identityConfirmationService.getTokenById(USER_ID)
+        val responseId = identityConfirmationService.getUserIdByCode(CODE)
+
+        assertSame(TokenGeneratorTest.USER_ID, responseId)
+        verify(codeRepositoryMock).findByCode(CODE)
+    }
+
+    @Test
+    fun `Checks if token exists`() {
+        doReturn(true).`when`(tokenGeneratorMock).doesTokenExist(TOKEN)
+
+        kotlin.test.assertTrue(identityConfirmationService.doesTokenExist(TOKEN))
+        verify(tokenGeneratorMock).doesTokenExist(TOKEN)
+    }
+
+    @Test
+    fun `Gets token by user id`() {
+        doReturn(TOKEN).`when`(tokenGeneratorMock).getTokenById(TokenGeneratorTest.USER_ID)
+
+        val responseToken = identityConfirmationService.getTokenById(TokenGeneratorTest.USER_ID)
 
         assertSame(TOKEN, responseToken)
-        verify(tokenRepositoryMock).findById(USER_ID)
+        verify(tokenGeneratorMock).getTokenById(TokenGeneratorTest.USER_ID)
     }
 
     @Test
     fun `Gets user id by token`() {
-        doReturn(UserToken(USER_ID, TOKEN)).`when`(tokenRepositoryMock).findByToken(TOKEN)
+        doReturn(TokenGeneratorTest.USER_ID).`when`(tokenGeneratorMock).getUserIdByToken(TOKEN)
 
         val responseId = identityConfirmationService.getUserIdByToken(TOKEN)
 
-        assertSame(USER_ID, responseId)
-        verify(tokenRepositoryMock).findByToken(TOKEN)
+        assertSame(TokenGeneratorTest.USER_ID, responseId)
+        verify(tokenGeneratorMock).getUserIdByToken(TOKEN)
     }
-
-    @Test
-    fun `Gets user id by confirmation code`() {
-        doReturn(UserConfirmationCode(USER_ID, CODE)).`when`(codeRepositoryMock).findByCode(CODE)
-
-        val responseId = identityConfirmationService.getUserIdByCode(CODE)
-
-        assertSame(USER_ID, responseId)
-        verify(codeRepositoryMock).findByCode(CODE)
-    }
-
 
     companion object {
         val USER_ID = "userId"

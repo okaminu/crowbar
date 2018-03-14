@@ -7,12 +7,11 @@ import cucumber.api.java.en.Then
 import cucumber.api.java.en.When
 import lt.tlistas.crowbar.IdentityConfirmation
 import lt.tlistas.crowbar.api.ConfirmationMessageGateway
+import lt.tlistas.crowbar.generator.TokenGenerator
 import lt.tlistas.crowbar.repository.UserConfirmationCodeRepository
-import lt.tlistas.crowbar.repository.UserTokenRepository
 import lt.tlistas.crowbar.test.acceptance.holder.TokenHolder
 import lt.tlistas.crowbar.test.acceptance.holder.UserHolder
 import lt.tlistas.crowbar.type.entity.UserConfirmationCode
-import lt.tlistas.crowbar.type.entity.UserToken
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import java.util.*
@@ -27,7 +26,7 @@ class ConfirmationStep {
     private lateinit var codeRepositoryMock: UserConfirmationCodeRepository
 
     @Mock
-    private lateinit var tokenRepositoryMock: UserTokenRepository
+    private lateinit var tokenGeneratorMock: TokenGenerator
 
     private lateinit var tokenHolder: TokenHolder
 
@@ -42,8 +41,8 @@ class ConfirmationStep {
         userHolder = UserHolder()
         identityConfirmation =
                 IdentityConfirmation(
-                    codeRepositoryMock, tokenRepositoryMock,
-                    confirmationMessageGatewayMock, mock(), mock()
+                    codeRepositoryMock,
+                    confirmationMessageGatewayMock, mock(), tokenGeneratorMock
                 )
     }
 
@@ -63,7 +62,7 @@ class ConfirmationStep {
     fun `I provide correct confirmation code`() {
         doReturn(UserConfirmationCode(USER_ID, CONFIRMATION_CODE))
             .`when`(codeRepositoryMock).findByCode(CONFIRMATION_CODE)
-        doReturn(Optional.of(UserToken(USER_ID, "token"))).`when`(tokenRepositoryMock).findById(USER_ID)
+        doReturn("token").`when`(tokenGeneratorMock).getTokenById(USER_ID)
 
         identityConfirmation.confirmCode(CONFIRMATION_CODE)
 

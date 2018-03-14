@@ -1,12 +1,12 @@
 package lt.tlistas.crowbar
 
 import lt.tlistas.crowbar.api.ConfirmationMessageGateway
-import lt.tlistas.crowbar.generator.*
-import lt.tlistas.crowbar.repository.*
+import lt.tlistas.crowbar.generator.ConfirmationCodeGenerator
+import lt.tlistas.crowbar.generator.TokenGenerator
+import lt.tlistas.crowbar.repository.UserConfirmationCodeRepository
 
 class IdentityConfirmation(
     private val userConfirmationCodeRepository: UserConfirmationCodeRepository,
-    private val userTokenRepository: UserTokenRepository,
     private val confirmationMessageGateway: ConfirmationMessageGateway,
     private val confirmationCodeGenerator: ConfirmationCodeGenerator,
     private val tokenGenerator: TokenGenerator
@@ -29,11 +29,11 @@ class IdentityConfirmation(
         tokenGenerator.generateAndStore(userId)
     }
 
-    fun getTokenById(userId: String) = userTokenRepository.findById(userId).get().token
+    fun getTokenById(userId: String) = tokenGenerator.getTokenById(userId)
 
-    fun getUserIdByToken(userId: String) = userTokenRepository.findByToken(userId).id
+    fun getUserIdByToken(userId: String) = tokenGenerator.getUserIdByToken(userId)
 
-    fun doesTokenExist(token: String) = userTokenRepository.existsByToken(token)
+    fun doesTokenExist(token: String) = tokenGenerator.doesTokenExist(token)
 
     fun getUserIdByCode(code: String) = userConfirmationCodeRepository.findByCode(code).id
 
