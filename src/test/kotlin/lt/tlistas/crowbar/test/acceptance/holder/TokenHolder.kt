@@ -1,8 +1,6 @@
 package lt.tlistas.crowbar.test.acceptance.holder
 
-class AuthenticationHolder {
-
-    var userId: String? = null
+class TokenHolder {
 
     var token: String? = null
 

@@ -1,49 +1,50 @@
 package lt.tlistas.crowbar.test.acceptance.step
 
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.doReturn
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.*
 import cucumber.api.java.Before
 import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then
 import cucumber.api.java.en.When
-import cucumber.api.java8.En
+import lt.tlistas.crowbar.IdentityConfirmation
 import lt.tlistas.crowbar.api.ConfirmationMessageGateway
-import lt.tlistas.crowbar.repository.ConfirmationCodeRepository
-import lt.tlistas.crowbar.service.ConfirmationCodeSender
-import lt.tlistas.crowbar.service.TokenService
-import lt.tlistas.crowbar.test.acceptance.holder.AuthenticationHolder
+import lt.tlistas.crowbar.repository.UserConfirmationCodeRepository
+import lt.tlistas.crowbar.repository.UserTokenRepository
+import lt.tlistas.crowbar.test.acceptance.holder.TokenHolder
 import lt.tlistas.crowbar.test.acceptance.holder.UserHolder
-import lt.tlistas.crowbar.type.entity.ConfirmationCode
+import lt.tlistas.crowbar.type.entity.UserConfirmationCode
+import lt.tlistas.crowbar.type.entity.UserToken
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
+import java.util.*
 import kotlin.test.assertNotNull
 
-class ConfirmationStep : En {
+class ConfirmationStep {
 
     @Mock
     private lateinit var confirmationMessageGatewayMock: ConfirmationMessageGateway
 
     @Mock
-    private lateinit var confirmationCodeRepositoryMock: ConfirmationCodeRepository
+    private lateinit var codeRepositoryMock: UserConfirmationCodeRepository
 
-    private lateinit var authenticationHolder: AuthenticationHolder
+    @Mock
+    private lateinit var tokenRepositoryMock: UserTokenRepository
+
+    private lateinit var tokenHolder: TokenHolder
 
     private lateinit var userHolder: UserHolder
 
-    private lateinit var confirmationCodeSender: ConfirmationCodeSender
-
-    private lateinit var tokenService: TokenService
+    private lateinit var identityConfirmation: IdentityConfirmation
 
     @Before
     fun `Set up`() {
         MockitoAnnotations.initMocks(this)
-        authenticationHolder = AuthenticationHolder()
+        tokenHolder = TokenHolder()
         userHolder = UserHolder()
-        confirmationCodeSender = ConfirmationCodeSender(mock(), confirmationMessageGatewayMock)
-        tokenService = TokenService(confirmationCodeRepositoryMock, mock())
-
+        identityConfirmation =
+                IdentityConfirmation(
+                    codeRepositoryMock, tokenRepositoryMock,
+                    confirmationMessageGatewayMock, mock(), mock()
+                )
     }
 
     @Given("^user exists$")
@@ -53,28 +54,32 @@ class ConfirmationStep : En {
 
     @When("^I provide confirmation address$")
     fun `I provide confirmation address`() {
-        confirmationCodeSender.send(userHolder.userId!!, ADDRESS)
+        doReturn(Optional.of(UserConfirmationCode(USER_ID, CONFIRMATION_CODE)))
+            .`when`(codeRepositoryMock).findById(USER_ID)
+        identityConfirmation.sendConfirmationCode(userHolder.userId!!, ADDRESS)
     }
 
     @When("^I provide correct confirmation code$")
     fun `I provide correct confirmation code`() {
-        doReturn(true).`when`(confirmationCodeRepositoryMock).existsByCode(CONFIRMATION_CODE)
-        doReturn(ConfirmationCode()).`when`(confirmationCodeRepositoryMock).findByCode(CONFIRMATION_CODE)
+        doReturn(UserConfirmationCode(USER_ID, CONFIRMATION_CODE))
+            .`when`(codeRepositoryMock).findByCode(CONFIRMATION_CODE)
+        doReturn(Optional.of(UserToken(USER_ID, "token"))).`when`(tokenRepositoryMock).findById(USER_ID)
 
-        authenticationHolder.apply {
-            userId = userHolder.userId
-            token = tokenService.confirmCode(CONFIRMATION_CODE)
+        identityConfirmation.confirmCode(CONFIRMATION_CODE)
+
+        tokenHolder.apply {
+            token = identityConfirmation.getTokenById(USER_ID)
         }
     }
 
     @Then("^user identity is confirmed$")
     fun `user is confirmed`() {
-        assertNotNull(authenticationHolder.token)
+        assertNotNull(tokenHolder.token)
     }
 
     @Then("^I receive confirmation code$")
     fun `I receive confirmation code`() {
-        verify(confirmationMessageGatewayMock).send(any(), any())
+        verify(confirmationMessageGatewayMock).send(any(), eq(ADDRESS))
     }
 
     companion object {

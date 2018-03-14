@@ -1,9 +1,9 @@
 package lt.tlistas.crowbar.type.entity
 
-class UserToken(
+class UserConfirmationCode(
 
         val id: String,
 
-        val token: String
+        val code: String
 
 )

@@ -56,7 +56,7 @@ requestService.sendConfirmation(address, userId)
 ```
 * Authenticate user by providing the confirmation code. It returns a token which identifies a unique user:
 ```
-val token = tokenService.confirmCode(confirmationCode)
+val token = tokenService.confirmCode(userConfirmationCode)
 ```
 ### Exception handling
 
