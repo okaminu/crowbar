@@ -12,10 +12,9 @@ import lt.tlistas.crowbar.repository.UserConfirmationCodeRepository
 import lt.tlistas.crowbar.test.unit.generator.TokenGeneratorTest
 import lt.tlistas.crowbar.type.entity.UserConfirmationCode
 import org.junit.Assert.assertSame
+import org.junit.Assert.assertTrue
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
-import org.junit.rules.ExpectedException
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
@@ -24,22 +23,15 @@ import java.util.*
 @RunWith(MockitoJUnitRunner::class)
 class IdentityConfirmationTest {
 
-    @Mock
-    private lateinit var codeRepositoryMock: UserConfirmationCodeRepository
+    @Mock private lateinit var codeRepositoryMock: UserConfirmationCodeRepository
 
-    @Mock
-    private lateinit var tokenGeneratorMock: TokenGenerator
+    @Mock private lateinit var tokenGeneratorMock: TokenGenerator
 
-    @Mock
-    private lateinit var codeGeneratorMock: ConfirmationCodeGenerator
+    @Mock private lateinit var codeGeneratorMock: ConfirmationCodeGenerator
 
-    @Mock
-    private lateinit var messageGateway: ConfirmationMessageGateway
+    @Mock private lateinit var messageGateway: ConfirmationMessageGateway
 
     private lateinit var identityConfirmationService: IdentityConfirmation
-    @Rule
-    @JvmField
-    val expectedException = ExpectedException.none()!!
 
     @Before
     fun `Set up`() {
@@ -82,7 +74,7 @@ class IdentityConfirmationTest {
     fun `Checks if user exists`() {
         doReturn(true).`when`(codeRepositoryMock).existsByCode(CODE)
 
-        kotlin.test.assertTrue(identityConfirmationService.doesUserByCodeExist(CODE))
+        assertTrue(identityConfirmationService.doesUserByCodeExist(CODE))
         verify(codeRepositoryMock).existsByCode(CODE)
     }
 
@@ -100,7 +92,7 @@ class IdentityConfirmationTest {
     fun `Checks if token exists`() {
         doReturn(true).`when`(tokenGeneratorMock).doesTokenExist(TOKEN)
 
-        kotlin.test.assertTrue(identityConfirmationService.doesTokenExist(TOKEN))
+        assertTrue(identityConfirmationService.doesTokenExist(TOKEN))
         verify(tokenGeneratorMock).doesTokenExist(TOKEN)
     }
 
@@ -125,8 +117,8 @@ class IdentityConfirmationTest {
     }
 
     companion object {
-        val USER_ID = "userId"
-        val CODE = "123456"
-        val TOKEN = "4a5sd4f-a654a65d4fa65d"
+        const val USER_ID = "userId"
+        const val CODE = "123456"
+        const val TOKEN = "4a5sd4f-a654a65d4fa65d"
     }
 }

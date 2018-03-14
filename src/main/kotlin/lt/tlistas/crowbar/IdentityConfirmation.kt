@@ -33,9 +33,9 @@ class IdentityConfirmation(
 
     fun getUserIdByToken(userId: String) = tokenGenerator.getUserIdByToken(userId)
 
-    fun doesTokenExist(token: String) = tokenGenerator.doesTokenExist(token)
-
     fun getUserIdByCode(code: String) = userConfirmationCodeRepository.findByCode(code).id
+
+    fun doesTokenExist(token: String) = tokenGenerator.doesTokenExist(token)
 
     fun doesUserByCodeExist(code: String) = userConfirmationCodeRepository.existsByCode(code)
 
