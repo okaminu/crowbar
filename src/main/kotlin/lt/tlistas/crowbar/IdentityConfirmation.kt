@@ -17,7 +17,7 @@ class IdentityConfirmation(
     fun sendConfirmationCode(userId: String, address: String) {
         confirmationCodeGenerator.generateAndStore(userId)
 
-        val code = userConfirmationCodeRepository.findById(userId).get().id
+        val code = userConfirmationCodeRepository.findById(userId).get().code
 
         confirmationMessageGateway.send(buildConfirmationMessage(code), address)
     }
