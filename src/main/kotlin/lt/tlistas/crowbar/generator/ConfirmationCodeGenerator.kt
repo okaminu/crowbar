@@ -11,10 +11,10 @@ class ConfirmationCodeGenerator(private val userConfirmationCodeRepository: User
         userConfirmationCodeRepository.save(UserConfirmationCode(userId, uniqueCode))
     }
 
-    private fun generateUnique(): String {
-        val randomCode = generate()
+     private fun generateUnique(): String {
+        var randomCode = generate()
         if (userConfirmationCodeRepository.existsByCode(randomCode))
-            generateUnique()
+           randomCode = generateUnique()
 
         return randomCode
     }

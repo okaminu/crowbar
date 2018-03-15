@@ -1,18 +1,15 @@
 package lt.tlistas.crowbar.test.unit.generator
 
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.doReturn
-import com.nhaarman.mockito_kotlin.times
-import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.*
 import lt.tlistas.crowbar.generator.ConfirmationCodeGenerator
 import lt.tlistas.crowbar.repository.UserConfirmationCodeRepository
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
-import org.junit.rules.ExpectedException
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 @RunWith(MockitoJUnitRunner::class)
 class ConfirmationCodeGeneratorTest {
@@ -21,10 +18,6 @@ class ConfirmationCodeGeneratorTest {
     private lateinit var repositoryMock: UserConfirmationCodeRepository
 
     private lateinit var confirmationCodeGenerator: ConfirmationCodeGenerator
-
-    @Rule
-    @JvmField
-    val expectedException = ExpectedException.none()!!
 
     @Before
     fun `Set up`() {
@@ -46,7 +39,10 @@ class ConfirmationCodeGeneratorTest {
 
         confirmationCodeGenerator.generateAndStore(USER_ID)
 
-        verify(repositoryMock).existsByCode(any())
+        argumentCaptor<String>().apply {
+            verify(repositoryMock).existsByCode(capture())
+            assertTrue(firstValue.isNotEmpty())
+        }
     }
 
     @Test
@@ -55,7 +51,14 @@ class ConfirmationCodeGeneratorTest {
 
         confirmationCodeGenerator.generateAndStore(USER_ID)
 
-        verify(repositoryMock, times(2)).existsByCode(any())
+        argumentCaptor<String>().apply {
+            verify(repositoryMock, times(2)).existsByCode(capture())
+            assertTrue(firstValue != secondValue)
+            verify(repositoryMock).save(check {
+                assertEquals(USER_ID, it.id)
+                assertEquals(secondValue, it.code)
+            })
+        }
     }
 
     companion object {

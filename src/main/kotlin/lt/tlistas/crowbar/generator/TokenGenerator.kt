@@ -13,9 +13,9 @@ class TokenGenerator(private val userTokenRepository: UserTokenRepository) {
     }
 
     private fun generateUnique(): String {
-        val token = generate()
+        var token = generate()
         if (userTokenRepository.existsByToken(token))
-            generateUnique()
+            token = generateUnique()
 
         return token
     }

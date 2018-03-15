@@ -1,22 +1,18 @@
 package lt.tlistas.crowbar.test.unit.generator
 
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.doReturn
-import com.nhaarman.mockito_kotlin.times
-import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.*
 import junit.framework.Assert.assertSame
 import lt.tlistas.crowbar.generator.TokenGenerator
 import lt.tlistas.crowbar.repository.UserTokenRepository
 import lt.tlistas.crowbar.test.unit.IdentityConfirmationTest.Companion.TOKEN
 import lt.tlistas.crowbar.type.entity.UserToken
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
-import org.junit.rules.ExpectedException
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 import java.util.*
+import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 @RunWith(MockitoJUnitRunner::class)
@@ -26,9 +22,6 @@ class TokenGeneratorTest {
     private lateinit var repositoryMock: UserTokenRepository
 
     private lateinit var tokenGenerator: TokenGenerator
-    @Rule
-    @JvmField
-    val expectedException = ExpectedException.none()!!
 
     @Before
     fun `Set up`() {
@@ -50,7 +43,10 @@ class TokenGeneratorTest {
 
         tokenGenerator.generateAndStore(USER_ID)
 
-        verify(repositoryMock).existsByToken(any())
+        argumentCaptor<String>().apply {
+            verify(repositoryMock).existsByToken(capture())
+            assertTrue(firstValue.isNotEmpty())
+        }
     }
 
     @Test
@@ -59,7 +55,14 @@ class TokenGeneratorTest {
 
         tokenGenerator.generateAndStore(USER_ID)
 
-        verify(repositoryMock, times(2)).existsByToken(any())
+        argumentCaptor<String>().apply {
+            verify(repositoryMock, times(2)).existsByToken(capture())
+            assertTrue(firstValue != secondValue)
+            verify(repositoryMock).save(check {
+                assertEquals(USER_ID, it.id)
+                assertEquals(secondValue, it.token)
+            })
+        }
     }
 
 
