@@ -9,9 +9,11 @@ import lt.tlistas.crowbar.IdentityConfirmation
 import lt.tlistas.crowbar.api.ConfirmationMessageGateway
 import lt.tlistas.crowbar.generator.TokenGenerator
 import lt.tlistas.crowbar.repository.UserConfirmationCodeRepository
+import lt.tlistas.crowbar.repository.UserTokenRepository
 import lt.tlistas.crowbar.test.acceptance.holder.TokenHolder
 import lt.tlistas.crowbar.test.acceptance.holder.UserHolder
 import lt.tlistas.crowbar.type.entity.UserConfirmationCode
+import lt.tlistas.crowbar.type.entity.UserToken
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import java.util.*
@@ -26,7 +28,9 @@ class ConfirmationStep {
     private lateinit var codeRepositoryMock: UserConfirmationCodeRepository
 
     @Mock
-    private lateinit var tokenGeneratorMock: TokenGenerator
+    private lateinit var userTokenRepositoryMock: UserTokenRepository
+
+    private lateinit var tokenGenerator: TokenGenerator
 
     private lateinit var tokenHolder: TokenHolder
 
@@ -39,10 +43,11 @@ class ConfirmationStep {
         MockitoAnnotations.initMocks(this)
         tokenHolder = TokenHolder()
         userHolder = UserHolder()
+        tokenGenerator = TokenGenerator(userTokenRepositoryMock)
         identityConfirmation =
                 IdentityConfirmation(
                     codeRepositoryMock,
-                    confirmationMessageGatewayMock, mock(), tokenGeneratorMock
+                    confirmationMessageGatewayMock, mock(), tokenGenerator
                 )
     }
 
@@ -62,7 +67,7 @@ class ConfirmationStep {
     fun `I provide correct confirmation code`() {
         doReturn(UserConfirmationCode(USER_ID, CONFIRMATION_CODE))
             .`when`(codeRepositoryMock).findByCode(CONFIRMATION_CODE)
-        doReturn("token").`when`(tokenGeneratorMock).getTokenById(USER_ID)
+        doReturn(Optional.of(UserToken(USER_ID, "token"))).`when`(userTokenRepositoryMock).findById(USER_ID)
 
         identityConfirmation.confirmCode(CONFIRMATION_CODE)
 
