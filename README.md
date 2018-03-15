@@ -42,7 +42,7 @@ interface UserConfirmationCodeMongoRepository
     override fun findByCode(code: String): UserConfirmationCode
 }
 ```
-* Implement *ConfirmationMessageGateway* from Crowbar API with a preferred message delivery provider
+* Implement *ConfirmationMessageGateway* from Crowbar API with a preferred message delivery provider. [Plugin example](https://github.com/tlistas/Crowbar_AWS_SNS_Plugin)
 
 Example:
 ```
