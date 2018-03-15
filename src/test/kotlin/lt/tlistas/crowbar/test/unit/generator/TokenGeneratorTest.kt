@@ -1,11 +1,11 @@
 package lt.tlistas.crowbar.test.unit.generator
 
 import com.nhaarman.mockito_kotlin.*
-import junit.framework.Assert.assertSame
 import lt.tlistas.crowbar.generator.TokenGenerator
 import lt.tlistas.crowbar.repository.UserTokenRepository
 import lt.tlistas.crowbar.test.unit.IdentityConfirmationTest.Companion.TOKEN
 import lt.tlistas.crowbar.type.entity.UserToken
+import org.junit.Assert.assertSame
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
