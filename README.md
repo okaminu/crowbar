@@ -23,7 +23,39 @@ Crowbar is an extensible library, which helps to authenticate user via preferred
 
 
 ### Download
+* Gradle
+```
+repositories {
+    repositories {
+        maven {
+            url 'http://repository.tlist.no.s3.amazonaws.com/releases/'
+        }
+    }
+}
 
+dependencies {
+    compile "lt.tlistas.crowbar:crowbar:1.1.1"
+}
+```
+* Maven
+```
+<repositories>
+        <repository>
+            <id>tlist-release-repo</id>
+            <name>Tlist Release Repository</name>
+            <url>http://repository.tlist.no.s3.amazonaws.com/releases/</url>
+        </repository>
+</repositories>
+
+
+<dependencies>
+        <dependency>
+            <groupId>lt.tlistas.crowbar</groupId>
+            <artifactId>crowbar</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+</dependencies>
+```
 
 ### Usage
 * Implement *UserTokenRepository* and *UserConfirmationCodeRepository* with your own choice of database.
