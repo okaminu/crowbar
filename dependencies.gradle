@@ -1,15 +1,9 @@
-apply from: 'aws-credentials.gradle'
-
 repositories {
     mavenLocal()
     mavenCentral()
     repositories {
         maven {
-            url 's3://repository.tlist.no/releases'
-            credentials(AwsCredentials) {
-                accessKey awsCredentials.AWSAccessKeyId
-                secretKey awsCredentials.AWSSecretKey
-            }
+            url 'http://repository.tlist.no.s3.amazonaws.com/releases/'
         }
     }
 }
