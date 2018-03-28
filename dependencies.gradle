@@ -15,7 +15,7 @@ repositories {
 }
 
 dependencies {
-    compile "lt.tlistas:crowbar-api:1.1.1"
+    compile "lt.tlistas.crowbar:crowbar-api:1.1.1"
 
     compile 'com.amazonaws:aws-java-sdk-sns:1.11.258'
 
