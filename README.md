@@ -40,20 +40,20 @@ dependencies {
 * Maven
 ```
 <repositories>
-        <repository>
-            <id>tlist-release-repo</id>
-            <name>Tlist Release Repository</name>
-            <url>http://repository.tlist.no.s3.amazonaws.com/releases/</url>
-        </repository>
+    <repository>
+        <id>tlist-release-repo</id>
+        <name>Tlist Release Repository</name>
+        <url>http://repository.tlist.no.s3.amazonaws.com/releases/</url>
+    </repository>
 </repositories>
 
 
 <dependencies>
-        <dependency>
-            <groupId>lt.tlistas.crowbar</groupId>
-            <artifactId>crowbar</artifactId>
-            <version>1.1.1</version>
-        </dependency>
+    <dependency>
+        <groupId>lt.tlistas.crowbar</groupId>
+        <artifactId>crowbar</artifactId>
+        <version>1.1.1</version>
+    </dependency>
 </dependencies>
 ```
 
@@ -99,4 +99,4 @@ val token = identityConfirmation.getTokenById(userId: String)
 ```
 ### License
 
-This library is licensed under MIT. Full license text is available in [LICENSE](https://github.com/tlistas/Crowbar/blob/TLIST-466-mobile-confirmation/LICENSE.txt).
+This library is licensed under MIT. Full license text is available in [LICENSE](https://github.com/tlistas/Crowbar/blob/dev/LICENSE.txt).
