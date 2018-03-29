@@ -4,4 +4,4 @@ phases:
   build:
     commands:
       - chmod +x gradlew
-      - ./gradlew build publish
+      - ./gradlew publish
