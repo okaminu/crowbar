@@ -1,8 +1,8 @@
-package lt.tlistas.crowbar.test.unit.generator
+package lt.boldadmin.crowbar.test.unit.generator
 
 import com.nhaarman.mockito_kotlin.*
-import lt.tlistas.crowbar.generator.ConfirmationCodeGenerator
-import lt.tlistas.crowbar.repository.UserConfirmationCodeRepository
+import lt.boldadmin.crowbar.generator.ConfirmationCodeGenerator
+import lt.boldadmin.crowbar.repository.UserConfirmationCodeRepository
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

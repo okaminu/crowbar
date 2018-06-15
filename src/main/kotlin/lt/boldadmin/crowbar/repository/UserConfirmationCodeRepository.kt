@@ -1,6 +1,6 @@
-package lt.tlistas.crowbar.repository
+package lt.boldadmin.crowbar.repository
 
-import lt.tlistas.crowbar.type.entity.UserConfirmationCode
+import lt.boldadmin.crowbar.entity.UserConfirmationCode
 import java.util.*
 
 interface UserConfirmationCodeRepository {

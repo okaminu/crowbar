@@ -1,6 +1,6 @@
-package lt.tlistas.crowbar.repository
+package lt.boldadmin.crowbar.repository
 
-import lt.tlistas.crowbar.type.entity.UserToken
+import lt.boldadmin.crowbar.entity.UserToken
 import java.util.*
 
 interface UserTokenRepository {

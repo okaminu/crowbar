@@ -1,4 +1,4 @@
-package lt.tlistas.crowbar.test.acceptance.runner
+package lt.boldadmin.crowbar.test.acceptance.runner
 
 import cucumber.api.CucumberOptions
 import cucumber.api.junit.Cucumber
@@ -8,6 +8,6 @@ import org.junit.runner.RunWith
 @CucumberOptions(
     format = arrayOf("progress"),
     features = arrayOf("src/test/resources/feature"),
-    glue = arrayOf("lt.tlistas.crowbar.test.acceptance.step")
+    glue = arrayOf("lt.boldadmin.crowbar.test.acceptance.step")
 )
 class AcceptanceTest

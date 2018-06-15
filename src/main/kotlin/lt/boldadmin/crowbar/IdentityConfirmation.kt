@@ -1,9 +1,9 @@
-package lt.tlistas.crowbar
+package lt.boldadmin.crowbar
 
 import lt.tlistas.crowbar.api.ConfirmationMessageGateway
-import lt.tlistas.crowbar.generator.ConfirmationCodeGenerator
-import lt.tlistas.crowbar.generator.TokenGenerator
-import lt.tlistas.crowbar.repository.UserConfirmationCodeRepository
+import lt.boldadmin.crowbar.generator.ConfirmationCodeGenerator
+import lt.boldadmin.crowbar.generator.TokenGenerator
+import lt.boldadmin.crowbar.repository.UserConfirmationCodeRepository
 
 class IdentityConfirmation(
     private val userConfirmationCodeRepository: UserConfirmationCodeRepository,

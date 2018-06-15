@@ -1,16 +1,16 @@
-package lt.tlistas.crowbar.test.unit
+package lt.boldadmin.crowbar.test.unit
 
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.eq
 import com.nhaarman.mockito_kotlin.verify
-import lt.tlistas.crowbar.IdentityConfirmation
+import lt.boldadmin.crowbar.IdentityConfirmation
 import lt.tlistas.crowbar.api.ConfirmationMessageGateway
-import lt.tlistas.crowbar.generator.ConfirmationCodeGenerator
-import lt.tlistas.crowbar.generator.TokenGenerator
-import lt.tlistas.crowbar.repository.UserConfirmationCodeRepository
-import lt.tlistas.crowbar.test.unit.generator.TokenGeneratorTest
-import lt.tlistas.crowbar.type.entity.UserConfirmationCode
+import lt.boldadmin.crowbar.generator.ConfirmationCodeGenerator
+import lt.boldadmin.crowbar.generator.TokenGenerator
+import lt.boldadmin.crowbar.repository.UserConfirmationCodeRepository
+import lt.boldadmin.crowbar.test.unit.generator.TokenGeneratorTest
+import lt.boldadmin.crowbar.entity.UserConfirmationCode
 import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -36,8 +36,8 @@ class IdentityConfirmationTest {
     @Before
     fun `Set up`() {
         identityConfirmationService = IdentityConfirmation(
-            codeRepositoryMock,
-            messageGateway, codeGeneratorMock, tokenGeneratorMock
+                codeRepositoryMock,
+                messageGateway, codeGeneratorMock, tokenGeneratorMock
         )
     }
 

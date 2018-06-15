@@ -1,4 +1,4 @@
-package lt.tlistas.crowbar.test.acceptance.holder
+package lt.boldadmin.crowbar.test.acceptance.holder
 
 class UserHolder {
 

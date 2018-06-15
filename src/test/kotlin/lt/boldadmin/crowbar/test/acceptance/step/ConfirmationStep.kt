@@ -1,19 +1,19 @@
-package lt.tlistas.crowbar.test.acceptance.step
+package lt.boldadmin.crowbar.test.acceptance.step
 
 import com.nhaarman.mockito_kotlin.*
 import cucumber.api.java.Before
 import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then
 import cucumber.api.java.en.When
-import lt.tlistas.crowbar.IdentityConfirmation
+import lt.boldadmin.crowbar.IdentityConfirmation
 import lt.tlistas.crowbar.api.ConfirmationMessageGateway
-import lt.tlistas.crowbar.generator.TokenGenerator
-import lt.tlistas.crowbar.repository.UserConfirmationCodeRepository
-import lt.tlistas.crowbar.repository.UserTokenRepository
-import lt.tlistas.crowbar.test.acceptance.holder.TokenHolder
-import lt.tlistas.crowbar.test.acceptance.holder.UserHolder
-import lt.tlistas.crowbar.type.entity.UserConfirmationCode
-import lt.tlistas.crowbar.type.entity.UserToken
+import lt.boldadmin.crowbar.generator.TokenGenerator
+import lt.boldadmin.crowbar.repository.UserConfirmationCodeRepository
+import lt.boldadmin.crowbar.repository.UserTokenRepository
+import lt.boldadmin.crowbar.test.acceptance.holder.TokenHolder
+import lt.boldadmin.crowbar.test.acceptance.holder.UserHolder
+import lt.boldadmin.crowbar.entity.UserConfirmationCode
+import lt.boldadmin.crowbar.entity.UserToken
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import java.util.*
@@ -46,8 +46,8 @@ class ConfirmationStep {
         tokenGenerator = TokenGenerator(userTokenRepositoryMock)
         identityConfirmation =
                 IdentityConfirmation(
-                    codeRepositoryMock,
-                    confirmationMessageGatewayMock, mock(), tokenGenerator
+                        codeRepositoryMock,
+                        confirmationMessageGatewayMock, mock(), tokenGenerator
                 )
     }
 

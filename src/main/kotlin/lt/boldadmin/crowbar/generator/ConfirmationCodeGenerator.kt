@@ -1,7 +1,7 @@
-package lt.tlistas.crowbar.generator
+package lt.boldadmin.crowbar.generator
 
-import lt.tlistas.crowbar.repository.UserConfirmationCodeRepository
-import lt.tlistas.crowbar.type.entity.UserConfirmationCode
+import lt.boldadmin.crowbar.repository.UserConfirmationCodeRepository
+import lt.boldadmin.crowbar.entity.UserConfirmationCode
 import java.util.*
 
 class ConfirmationCodeGenerator(private val userConfirmationCodeRepository: UserConfirmationCodeRepository) {
