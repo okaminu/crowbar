@@ -9,7 +9,7 @@ repositories {
 }
 
 dependencies {
-    compile "lt.boldadmin:crowbar-api:1.1.1"
+    compile "lt.boldadmin.crowbar:crowbar-api:1.1.1"
 
     compile 'com.amazonaws:aws-java-sdk-sns:1.11.258'
 
