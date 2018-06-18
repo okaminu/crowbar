@@ -1,4 +1,4 @@
-package lt.boldadmin.crowbar.entity
+package lt.boldadmin.crowbar.type.entity
 
 class UserConfirmationCode(
 

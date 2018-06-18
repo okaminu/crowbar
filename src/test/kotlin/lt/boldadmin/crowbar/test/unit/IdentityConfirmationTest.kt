@@ -10,7 +10,7 @@ import lt.boldadmin.crowbar.generator.ConfirmationCodeGenerator
 import lt.boldadmin.crowbar.generator.TokenGenerator
 import lt.boldadmin.crowbar.repository.UserConfirmationCodeRepository
 import lt.boldadmin.crowbar.test.unit.generator.TokenGeneratorTest
-import lt.boldadmin.crowbar.entity.UserConfirmationCode
+import lt.boldadmin.crowbar.type.entity.UserConfirmationCode
 import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
 import org.junit.Before

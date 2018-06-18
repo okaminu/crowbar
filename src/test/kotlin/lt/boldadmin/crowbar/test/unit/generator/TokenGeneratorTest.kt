@@ -4,7 +4,7 @@ import com.nhaarman.mockito_kotlin.*
 import lt.boldadmin.crowbar.generator.TokenGenerator
 import lt.boldadmin.crowbar.repository.UserTokenRepository
 import lt.boldadmin.crowbar.test.unit.IdentityConfirmationTest.Companion.TOKEN
-import lt.boldadmin.crowbar.entity.UserToken
+import lt.boldadmin.crowbar.type.entity.UserToken
 import org.junit.Assert.assertSame
 import org.junit.Before
 import org.junit.Test

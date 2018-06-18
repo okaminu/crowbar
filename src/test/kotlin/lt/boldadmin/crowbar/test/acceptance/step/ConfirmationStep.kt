@@ -12,8 +12,8 @@ import lt.boldadmin.crowbar.repository.UserConfirmationCodeRepository
 import lt.boldadmin.crowbar.repository.UserTokenRepository
 import lt.boldadmin.crowbar.test.acceptance.holder.TokenHolder
 import lt.boldadmin.crowbar.test.acceptance.holder.UserHolder
-import lt.boldadmin.crowbar.entity.UserConfirmationCode
-import lt.boldadmin.crowbar.entity.UserToken
+import lt.boldadmin.crowbar.type.entity.UserConfirmationCode
+import lt.boldadmin.crowbar.type.entity.UserToken
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import java.util.*

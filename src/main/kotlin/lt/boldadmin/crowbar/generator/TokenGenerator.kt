@@ -1,7 +1,7 @@
 package lt.boldadmin.crowbar.generator
 
 import lt.boldadmin.crowbar.repository.UserTokenRepository
-import lt.boldadmin.crowbar.entity.UserToken
+import lt.boldadmin.crowbar.type.entity.UserToken
 import java.util.*
 
 class TokenGenerator(private val userTokenRepository: UserTokenRepository) {

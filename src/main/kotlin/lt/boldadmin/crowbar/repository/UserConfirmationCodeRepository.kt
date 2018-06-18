@@ -1,6 +1,6 @@
 package lt.boldadmin.crowbar.repository
 
-import lt.boldadmin.crowbar.entity.UserConfirmationCode
+import lt.boldadmin.crowbar.type.entity.UserConfirmationCode
 import java.util.*
 
 interface UserConfirmationCodeRepository {
