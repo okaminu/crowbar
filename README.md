@@ -28,29 +28,29 @@ Crowbar is an extensible library, which helps to authenticate user via preferred
 repositories {
     repositories {
         maven {
-            url 'http://repository.tlist.no.s3.amazonaws.com/releases/'
+            url 'http://repository.boldadmin.com.s3.amazonaws.com/releases/'
         }
     }
 }
 
 dependencies {
-    compile "lt.tlistas.crowbar:crowbar:1.1.1"
+    compile "lt.boldadmin.crowbar:crowbar:1.1.1"
 }
 ```
 * Maven
 ```
 <repositories>
     <repository>
-        <id>tlist-release-repo</id>
-        <name>Tlist Release Repository</name>
-        <url>http://repository.tlist.no.s3.amazonaws.com/releases/</url>
+        <id>boldadmin-release-repo</id>
+        <name>BoldAdmin Release Repository</name>
+        <url>http://repository.boldadmin.com.s3.amazonaws.com/releases/</url>
     </repository>
 </repositories>
 
 
 <dependencies>
     <dependency>
-        <groupId>lt.tlistas.crowbar</groupId>
+        <groupId>lt.boldadmin.crowbar</groupId>
         <artifactId>crowbar</artifactId>
         <version>1.1.1</version>
     </dependency>
@@ -74,7 +74,8 @@ interface UserConfirmationCodeMongoRepository
     override fun findByCode(code: String): UserConfirmationCode
 }
 ```
-* Implement *ConfirmationMessageGateway* from Crowbar API with a preferred message delivery provider. [Plugin example](https://github.com/tlistas/Crowbar_AWS_SNS_Plugin)
+* Implement *ConfirmationMessageGateway* from Crowbar API with a preferred message delivery provider. [Plugin 
+example](https://github.com/boldadmin-com/Crowbar_AWS_SNS_Plugin)
 
 Example:
 ```
@@ -99,4 +100,5 @@ val token = identityConfirmation.getTokenById(userId: String)
 ```
 ### License
 
-This library is licensed under MIT. Full license text is available in [LICENSE](https://github.com/tlistas/Crowbar/blob/dev/LICENSE.txt).
+This library is licensed under MIT. Full license text is available in [LICENSE](https://github
+.com/boldadmin-com/Crowbar/blob/dev/LICENSE.txt).

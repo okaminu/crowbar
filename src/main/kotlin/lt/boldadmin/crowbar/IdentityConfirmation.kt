@@ -1,6 +1,6 @@
 package lt.boldadmin.crowbar
 
-import lt.tlistas.crowbar.api.ConfirmationMessageGateway
+import lt.boldadmin.crowbar.api.ConfirmationMessageGateway
 import lt.boldadmin.crowbar.generator.ConfirmationCodeGenerator
 import lt.boldadmin.crowbar.generator.TokenGenerator
 import lt.boldadmin.crowbar.repository.UserConfirmationCodeRepository

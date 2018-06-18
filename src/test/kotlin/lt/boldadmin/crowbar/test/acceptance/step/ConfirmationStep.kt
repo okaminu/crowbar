@@ -6,7 +6,7 @@ import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then
 import cucumber.api.java.en.When
 import lt.boldadmin.crowbar.IdentityConfirmation
-import lt.tlistas.crowbar.api.ConfirmationMessageGateway
+import lt.boldadmin.crowbar.api.ConfirmationMessageGateway
 import lt.boldadmin.crowbar.generator.TokenGenerator
 import lt.boldadmin.crowbar.repository.UserConfirmationCodeRepository
 import lt.boldadmin.crowbar.repository.UserTokenRepository

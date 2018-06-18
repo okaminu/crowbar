@@ -3,13 +3,13 @@ repositories {
     mavenCentral()
     repositories {
         maven {
-            url 'http://repository.tlist.no.s3.amazonaws.com/releases/'
+            url 'http://repository.boldadmin.com.s3.amazonaws.com/releases/'
         }
     }
 }
 
 dependencies {
-    compile "lt.tlistas.crowbar:crowbar-api:1.1.1"
+    compile "lt.boldadmin:crowbar-api:1.1.1"
 
     compile 'com.amazonaws:aws-java-sdk-sns:1.11.258'
 

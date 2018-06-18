@@ -5,7 +5,7 @@ import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.eq
 import com.nhaarman.mockito_kotlin.verify
 import lt.boldadmin.crowbar.IdentityConfirmation
-import lt.tlistas.crowbar.api.ConfirmationMessageGateway
+import lt.boldadmin.crowbar.api.ConfirmationMessageGateway
 import lt.boldadmin.crowbar.generator.ConfirmationCodeGenerator
 import lt.boldadmin.crowbar.generator.TokenGenerator
 import lt.boldadmin.crowbar.repository.UserConfirmationCodeRepository

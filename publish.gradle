@@ -4,14 +4,14 @@ apply from: 'aws-credentials.gradle'
 publishing {
     publications {
         mavenJava(MavenPublication) { publication ->
-            groupId 'lt.tlistas.crowbar'
+            groupId 'lt.boldadmin.crowbar'
             artifactId = 'crowbar'
             version '1.1.1'
             from components.java
 
             repositories {
                 maven {
-                    url 's3://repository.tlist.no/releases'
+                    url 's3://repository.boldadmin.com/releases'
                     credentials(AwsCredentials) {
                         accessKey = awsCredentials.AWSAccessKeyId
                         secretKey = awsCredentials.AWSSecretKey
