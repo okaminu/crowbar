@@ -100,5 +100,4 @@ val token = identityConfirmation.getTokenById(userId: String)
 ```
 ### License
 
-This library is licensed under MIT. Full license text is available in [LICENSE](https://github
-.com/boldadmin-com/Crowbar/blob/dev/LICENSE.txt).
+This library is licensed under MIT. Full license text is available in [LICENSE](https://github.com/boldadmin-com/Crowbar/blob/dev/LICENSE.txt).
