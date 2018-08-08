@@ -24,7 +24,7 @@ class TokenGenerator(private val userTokenRepository: UserTokenRepository) {
 
     fun getTokenById(userId: String) = userTokenRepository.findById(userId).get().token
 
-    fun getUserIdByToken(userId: String) = userTokenRepository.findByToken(userId).id
+    fun getUserIdByToken(token: String) = userTokenRepository.findByToken(token).id
 
     fun doesTokenExist(token: String) = userTokenRepository.existsByToken(token)
 }

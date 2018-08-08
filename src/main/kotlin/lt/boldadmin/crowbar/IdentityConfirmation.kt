@@ -31,7 +31,7 @@ class IdentityConfirmation(
 
     fun getTokenById(userId: String) = tokenGenerator.getTokenById(userId)
 
-    fun getUserIdByToken(userId: String) = tokenGenerator.getUserIdByToken(userId)
+    fun getUserIdByToken(token: String) = tokenGenerator.getUserIdByToken(token)
 
     fun getUserIdByCode(code: String) = userConfirmationCodeRepository.findByCode(code).id
 
