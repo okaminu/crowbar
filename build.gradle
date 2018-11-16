@@ -11,6 +11,9 @@ apply from: 'dependencies.gradle'
 apply from: 'publish.gradle'
 apply from: 'jacoco.gradle'
 
+group = gradle.ext.group
+version = gradle.ext.version
+
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
     kotlinOptions {
         jvmTarget = "1.8"
