@@ -12,7 +12,7 @@ jacocoTestReport {
     }
 
     afterEvaluate {
-        classDirectories = debugTree
+        classDirectories.from = debugTree
     }
 }
 
@@ -27,7 +27,7 @@ jacocoTestCoverageVerification {
         }
 
         afterEvaluate {
-            classDirectories = debugTree
+            classDirectories.from = debugTree
         }
     }
 }
