@@ -3,7 +3,7 @@ repositories {
     mavenCentral()
     repositories {
         maven {
-            url 'http://repository.boldadmin.com.s3.amazonaws.com/snapshots/'
+            url 'http://repository.boldadmin.com.s3.amazonaws.com/releases/'
         }
     }
 }
