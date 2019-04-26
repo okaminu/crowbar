@@ -1,11 +1,16 @@
 buildscript {
     ext.kotlin_version = '1.2.51'
+    
+    dependencies {
+        classpath 'org.owasp:dependency-check-gradle:5.0.0-M2'
+    }
 }
 
 plugins {
     id 'org.jetbrains.kotlin.jvm' version "1.2.51"
 }
 
+apply plugin: 'org.owasp.dependencycheck'
 apply plugin: 'kotlin'
 apply from: 'dependencies.gradle'
 apply from: 'publish.gradle'
