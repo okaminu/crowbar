@@ -1,6 +1,6 @@
 package lt.boldadmin.crowbar.test.unit.generator
 
-import com.nhaarman.mockito_kotlin.*
+import com.nhaarman.mockitokotlin2.*
 import lt.boldadmin.crowbar.generator.ConfirmationCodeGenerator
 import lt.boldadmin.crowbar.repository.UserConfirmationCodeRepository
 import org.junit.Before

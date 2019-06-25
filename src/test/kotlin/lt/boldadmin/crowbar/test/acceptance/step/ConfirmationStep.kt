@@ -1,6 +1,6 @@
 package lt.boldadmin.crowbar.test.acceptance.step
 
-import com.nhaarman.mockito_kotlin.*
+import com.nhaarman.mockitokotlin2.*
 import cucumber.api.java.Before
 import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then

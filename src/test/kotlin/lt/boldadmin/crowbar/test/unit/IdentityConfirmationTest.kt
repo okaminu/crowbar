@@ -1,9 +1,6 @@
 package lt.boldadmin.crowbar.test.unit
 
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.doReturn
-import com.nhaarman.mockito_kotlin.eq
-import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockitokotlin2.*
 import lt.boldadmin.crowbar.IdentityConfirmation
 import lt.boldadmin.crowbar.api.ConfirmationMessageGateway
 import lt.boldadmin.crowbar.generator.ConfirmationCodeGenerator

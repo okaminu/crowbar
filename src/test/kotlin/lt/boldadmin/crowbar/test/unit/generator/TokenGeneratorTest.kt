@@ -1,6 +1,6 @@
 package lt.boldadmin.crowbar.test.unit.generator
 
-import com.nhaarman.mockito_kotlin.*
+import com.nhaarman.mockitokotlin2.*
 import lt.boldadmin.crowbar.generator.TokenGenerator
 import lt.boldadmin.crowbar.repository.UserTokenRepository
 import lt.boldadmin.crowbar.test.unit.IdentityConfirmationTest.Companion.TOKEN
