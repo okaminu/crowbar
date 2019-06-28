@@ -15,7 +15,10 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    testImplementation "junit:junit:4.12"
+    testImplementation "org.junit.vintage:junit-vintage-engine:5.1.0"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.1.0"
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:5.1.0"
+    
     testImplementation "org.mockito:mockito-core:2.28.2"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
 
