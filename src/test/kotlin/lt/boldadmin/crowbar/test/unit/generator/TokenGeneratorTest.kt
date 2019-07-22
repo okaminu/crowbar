@@ -65,7 +65,6 @@ class TokenGeneratorTest {
         }
     }
 
-
     @Test
     fun `Checks if token exists`() {
         doReturn(true).`when`(repositoryMock).existsByToken(TOKEN)

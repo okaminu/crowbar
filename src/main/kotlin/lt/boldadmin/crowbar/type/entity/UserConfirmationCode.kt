@@ -2,8 +2,8 @@ package lt.boldadmin.crowbar.type.entity
 
 class UserConfirmationCode(
 
-        val id: String,
+    val id: String,
 
-        val code: String
+    val code: String
 
 )
