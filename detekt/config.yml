@@ -230,7 +230,7 @@ formatting:
     autoCorrect: true
     indentSize: 4
   SpacingAroundColon:
-    active: true
+    active: false
     autoCorrect: true
   SpacingAroundComma:
     active: true
@@ -333,7 +333,7 @@ performance:
   ForEachOnRange:
     active: true
   SpreadOperator:
-    active: true
+    active: false
   UnnecessaryTemporaryInstantiation:
     active: true
 
