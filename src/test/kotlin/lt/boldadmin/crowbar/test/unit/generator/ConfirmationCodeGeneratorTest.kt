@@ -1,64 +1,63 @@
 package lt.boldadmin.crowbar.test.unit.generator
 
-import com.nhaarman.mockitokotlin2.*
+import io.mockk.*
+import io.mockk.impl.annotations.MockK
+import io.mockk.junit5.MockKExtension
 import lt.boldadmin.crowbar.generator.ConfirmationCodeGenerator
 import lt.boldadmin.crowbar.repository.UserConfirmationCodeRepository
-import org.junit.Before
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
+import lt.boldadmin.crowbar.type.entity.UserConfirmationCode
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 
-@RunWith(MockitoJUnitRunner::class)
+@ExtendWith(MockKExtension::class)
 class ConfirmationCodeGeneratorTest {
 
-    @Mock
+    @MockK
     private lateinit var repositoryMock: UserConfirmationCodeRepository
 
     private lateinit var confirmationCodeGenerator: ConfirmationCodeGenerator
 
-    @Before
+    @BeforeEach
     fun `Set up`() {
         confirmationCodeGenerator = ConfirmationCodeGenerator(repositoryMock)
     }
 
     @Test
     fun `Stores confirmation code`() {
-        doReturn(false).`when`(repositoryMock).existsByCode(any())
+        every { repositoryMock.existsByCode(any()) } returns false
+        every { repositoryMock.save(any()) } just Runs
 
         confirmationCodeGenerator.generateAndStore(USER_ID)
 
-        verify(repositoryMock).save(any())
+        verify { repositoryMock.save(any()) }
     }
 
     @Test
     fun `Generates confirmation code`() {
-        doReturn(false).`when`(repositoryMock).existsByCode(any())
+        val confirmationCode = CapturingSlot<String>()
+        every { repositoryMock.existsByCode(capture(confirmationCode)) } returns false
+        every { repositoryMock.save(any()) } just Runs
 
         confirmationCodeGenerator.generateAndStore(USER_ID)
 
-        argumentCaptor<String>().apply {
-            verify(repositoryMock).existsByCode(capture())
-            assertTrue(firstValue.isNotEmpty())
-        }
+        assertTrue(confirmationCode.captured.isNotEmpty())
     }
 
     @Test
     fun `Generates confirmation code until unique one is found`() {
-        doReturn(true).doReturn(false).`when`(repositoryMock).existsByCode(any())
+        val confirmationCodes = mutableListOf<String>()
+        val savedCode = CapturingSlot<UserConfirmationCode>()
+        every { repositoryMock.existsByCode(capture(confirmationCodes)) } returns true andThen false
+        every { repositoryMock.save(capture(savedCode)) } just Runs
 
         confirmationCodeGenerator.generateAndStore(USER_ID)
 
-        argumentCaptor<String>().apply {
-            verify(repositoryMock, times(2)).existsByCode(capture())
-            assertTrue(firstValue != secondValue)
-            verify(repositoryMock).save(check {
-                assertEquals(USER_ID, it.id)
-                assertEquals(secondValue, it.code)
-            })
-        }
+        assertTrue(confirmationCodes[0] != confirmationCodes[1])
+        assertEquals(USER_ID, savedCode.captured.id)
+        assertEquals(confirmationCodes[1], savedCode.captured.code)
     }
 
     companion object {

@@ -1,12 +1,14 @@
 package lt.boldadmin.crowbar.test.acceptance.step
 
-import com.nhaarman.mockitokotlin2.*
 import cucumber.api.java.Before
 import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then
 import cucumber.api.java.en.When
+import io.mockk.*
+import io.mockk.impl.annotations.MockK
 import lt.boldadmin.crowbar.IdentityConfirmation
 import lt.boldadmin.crowbar.api.ConfirmationMessageGateway
+import lt.boldadmin.crowbar.generator.ConfirmationCodeGenerator
 import lt.boldadmin.crowbar.generator.TokenGenerator
 import lt.boldadmin.crowbar.repository.UserConfirmationCodeRepository
 import lt.boldadmin.crowbar.repository.UserTokenRepository
@@ -14,21 +16,22 @@ import lt.boldadmin.crowbar.test.acceptance.holder.TokenHolder
 import lt.boldadmin.crowbar.test.acceptance.holder.UserHolder
 import lt.boldadmin.crowbar.type.entity.UserConfirmationCode
 import lt.boldadmin.crowbar.type.entity.UserToken
-import org.mockito.Mock
-import org.mockito.MockitoAnnotations
 import java.util.*
 import kotlin.test.assertNotNull
 
 class ConfirmationStep {
 
-    @Mock
+    @MockK
     private lateinit var confirmationMessageGatewayMock: ConfirmationMessageGateway
 
-    @Mock
+    @MockK
     private lateinit var codeRepositoryMock: UserConfirmationCodeRepository
 
-    @Mock
+    @MockK
     private lateinit var userTokenRepositoryMock: UserTokenRepository
+
+    @MockK
+    private lateinit var codeGeneratorStub: ConfirmationCodeGenerator
 
     private lateinit var tokenGenerator: TokenGenerator
 
@@ -40,15 +43,15 @@ class ConfirmationStep {
 
     @Before
     fun `Set up`() {
-        MockitoAnnotations.initMocks(this)
+        MockKAnnotations.init(this)
         tokenHolder = TokenHolder()
         userHolder = UserHolder()
         tokenGenerator = TokenGenerator(userTokenRepositoryMock)
         identityConfirmation =
-                IdentityConfirmation(
-                        codeRepositoryMock,
-                        confirmationMessageGatewayMock, mock(), tokenGenerator
-                )
+            IdentityConfirmation(
+                codeRepositoryMock,
+                confirmationMessageGatewayMock, codeGeneratorStub, tokenGenerator
+            )
     }
 
     @Given("^user exists$")
@@ -58,22 +61,27 @@ class ConfirmationStep {
 
     @When("^I provide confirmation address$")
     fun `I provide confirmation address`() {
-        doReturn(Optional.of(UserConfirmationCode(USER_ID, CONFIRMATION_CODE)))
-            .`when`(codeRepositoryMock).findById(USER_ID)
+        every { codeRepositoryMock.findById(USER_ID) } returns Optional.of(
+            UserConfirmationCode(USER_ID, CONFIRMATION_CODE)
+        )
+        every { codeGeneratorStub.generateAndStore(USER_ID) } just Runs
+        every { confirmationMessageGatewayMock.send(any(), ADDRESS) } just Runs
         identityConfirmation.sendConfirmationCode(userHolder.userId!!, ADDRESS)
     }
 
     @When("^I provide correct confirmation code$")
     fun `I provide correct confirmation code`() {
-        doReturn(UserConfirmationCode(USER_ID, CONFIRMATION_CODE))
-            .`when`(codeRepositoryMock).findByCode(CONFIRMATION_CODE)
-        doReturn(Optional.of(UserToken(USER_ID, "token"))).`when`(userTokenRepositoryMock).findById(USER_ID)
+        every { codeRepositoryMock.findByCode(CONFIRMATION_CODE) } returns UserConfirmationCode(
+            USER_ID, CONFIRMATION_CODE
+        )
+        every { userTokenRepositoryMock.findById(USER_ID) } returns Optional.of(UserToken(USER_ID, "token"))
+        every { codeRepositoryMock.deleteByCode(CONFIRMATION_CODE) } just Runs
+        every { userTokenRepositoryMock.existsByToken(any()) } returns false
+        every { userTokenRepositoryMock.save(any()) } just Runs
 
         identityConfirmation.confirmCode(CONFIRMATION_CODE)
 
-        tokenHolder.apply {
-            token = identityConfirmation.getTokenById(USER_ID)
-        }
+        tokenHolder.apply { token = identityConfirmation.getTokenById(USER_ID) }
     }
 
     @Then("^user identity is confirmed$")
@@ -83,7 +91,7 @@ class ConfirmationStep {
 
     @Then("^I receive confirmation code$")
     fun `I receive confirmation code`() {
-        verify(confirmationMessageGatewayMock).send(any(), eq(ADDRESS))
+        verify { confirmationMessageGatewayMock.send(any(), eq(ADDRESS)) }
     }
 
     companion object {

@@ -1,100 +1,92 @@
 package lt.boldadmin.crowbar.test.unit.generator
 
-import com.nhaarman.mockitokotlin2.*
+import io.mockk.*
+import io.mockk.impl.annotations.MockK
+import io.mockk.junit5.MockKExtension
 import lt.boldadmin.crowbar.generator.TokenGenerator
 import lt.boldadmin.crowbar.repository.UserTokenRepository
-import lt.boldadmin.crowbar.test.unit.IdentityConfirmationTest.Companion.TOKEN
 import lt.boldadmin.crowbar.type.entity.UserToken
-import org.junit.Assert.assertSame
-import org.junit.Before
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import java.util.*
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
-@RunWith(MockitoJUnitRunner::class)
+@ExtendWith(MockKExtension::class)
 class TokenGeneratorTest {
 
-    @Mock
+    @MockK
     private lateinit var repositoryMock: UserTokenRepository
 
     private lateinit var tokenGenerator: TokenGenerator
 
-    @Before
+    @BeforeEach
     fun `Set up`() {
         tokenGenerator = TokenGenerator(repositoryMock)
     }
 
     @Test
     fun `Stores authentication token`() {
-        doReturn(false).`when`(repositoryMock).existsByToken(any())
+        every { repositoryMock.existsByToken(any()) } returns false
+        every { repositoryMock.save(any()) } just Runs
 
         tokenGenerator.generateAndStore(USER_ID)
 
-        verify(repositoryMock).save(any())
+        verify { repositoryMock.save(any()) }
     }
 
     @Test
     fun `Generates authentication token`() {
-        doReturn(false).`when`(repositoryMock).existsByToken(any())
+        val capturedToken = CapturingSlot<String>()
+        every { repositoryMock.existsByToken(capture(capturedToken)) } returns false
+        every { repositoryMock.save(any()) } just Runs
 
         tokenGenerator.generateAndStore(USER_ID)
 
-        argumentCaptor<String>().apply {
-            verify(repositoryMock).existsByToken(capture())
-            assertTrue(firstValue.isNotEmpty())
-        }
+        assertTrue(capturedToken.captured.isNotEmpty())
     }
 
     @Test
     fun `Generates authentication token until unique one is found`() {
-        doReturn(true).doReturn(false).`when`(repositoryMock).existsByToken(any())
+        val tokens = mutableListOf<String>()
+        val savedToken = CapturingSlot<UserToken>()
+        every { repositoryMock.existsByToken(capture(tokens)) } returns true andThen false
+        every { repositoryMock.save(capture(savedToken)) } just Runs
 
         tokenGenerator.generateAndStore(USER_ID)
 
-        argumentCaptor<String>().apply {
-            verify(repositoryMock, times(2)).existsByToken(capture())
-            assertTrue(firstValue != secondValue)
-            verify(repositoryMock).save(check {
-                assertEquals(USER_ID, it.id)
-                assertEquals(secondValue, it.token)
-            })
-        }
+        assertTrue(tokens[0] != tokens[1])
+        assertEquals(USER_ID, savedToken.captured.id)
+        assertEquals(tokens[1], savedToken.captured.token)
     }
-
 
     @Test
     fun `Checks if token exists`() {
-        doReturn(true).`when`(repositoryMock).existsByToken(TOKEN)
+        every { repositoryMock.existsByToken(TOKEN) } returns true
 
         assertTrue(tokenGenerator.doesTokenExist(TOKEN))
-        verify(repositoryMock).existsByToken(TOKEN)
     }
 
     @Test
     fun `Gets token by user id`() {
-        doReturn(Optional.of(UserToken(USER_ID, TOKEN))).`when`(repositoryMock).findById(USER_ID)
+        every { repositoryMock.findById(USER_ID) } returns Optional.of(UserToken(USER_ID, TOKEN))
 
         val responseToken = tokenGenerator.getTokenById(USER_ID)
 
         assertSame(TOKEN, responseToken)
-        verify(repositoryMock).findById(USER_ID)
     }
 
     @Test
     fun `Gets user id by token`() {
-        doReturn(UserToken(USER_ID, TOKEN)).`when`(repositoryMock).findByToken(TOKEN)
+        every { repositoryMock.findByToken(TOKEN) } returns UserToken(USER_ID, TOKEN)
 
         val responseId = tokenGenerator.getUserIdByToken(TOKEN)
 
         assertSame(USER_ID, responseId)
-        verify(repositoryMock).findByToken(TOKEN)
     }
 
     companion object {
-        val USER_ID = "userId"
+        private val USER_ID = "userId"
+        private val TOKEN = "token"
     }
 }
