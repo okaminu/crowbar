@@ -16,8 +16,8 @@ import lt.boldadmin.crowbar.test.acceptance.holder.TokenHolder
 import lt.boldadmin.crowbar.test.acceptance.holder.UserHolder
 import lt.boldadmin.crowbar.type.entity.UserConfirmationCode
 import lt.boldadmin.crowbar.type.entity.UserToken
+import org.junit.jupiter.api.Assertions.assertNotNull
 import java.util.*
-import kotlin.test.assertNotNull
 
 class ConfirmationStep {
 
