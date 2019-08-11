@@ -7,20 +7,8 @@ import java.util.*
 class TokenGenerator(private val userTokenRepository: UserTokenRepository) {
 
     fun generateAndStore(userId: String) {
-        val uniqueToken = generateUnique()
-
-        userTokenRepository.save(UserToken(userId, uniqueToken))
+        userTokenRepository.save(UserToken(userId, UUID.randomUUID().toString()))
     }
-
-    private fun generateUnique(): String {
-        var token = generate()
-        if (userTokenRepository.existsByToken(token))
-            token = generateUnique()
-
-        return token
-    }
-
-    private fun generate() = UUID.randomUUID().toString()
 
     fun getTokenById(userId: String) = userTokenRepository.findById(userId).get().token
 

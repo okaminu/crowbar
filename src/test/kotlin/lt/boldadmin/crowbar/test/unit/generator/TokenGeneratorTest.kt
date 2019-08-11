@@ -27,7 +27,6 @@ class TokenGeneratorTest {
 
     @Test
     fun `Stores authentication token`() {
-        every { repositoryMock.existsByToken(any()) } returns false
         every { repositoryMock.save(any()) } just Runs
 
         tokenGenerator.generateAndStore(USER_ID)
@@ -37,27 +36,12 @@ class TokenGeneratorTest {
 
     @Test
     fun `Generates authentication token`() {
-        val capturedToken = CapturingSlot<String>()
-        every { repositoryMock.existsByToken(capture(capturedToken)) } returns false
-        every { repositoryMock.save(any()) } just Runs
+        val capturedToken = CapturingSlot<UserToken>()
+        every { repositoryMock.save(capture(capturedToken)) } just Runs
 
         tokenGenerator.generateAndStore(USER_ID)
 
-        assertTrue(capturedToken.captured.isNotEmpty())
-    }
-
-    @Test
-    fun `Generates authentication token until unique one is found`() {
-        val tokens = mutableListOf<String>()
-        val savedToken = CapturingSlot<UserToken>()
-        every { repositoryMock.existsByToken(capture(tokens)) } returns true andThen false
-        every { repositoryMock.save(capture(savedToken)) } just Runs
-
-        tokenGenerator.generateAndStore(USER_ID)
-
-        assertTrue(tokens[0] != tokens[1])
-        assertEquals(USER_ID, savedToken.captured.id)
-        assertEquals(tokens[1], savedToken.captured.token)
+        assertTrue(capturedToken.captured.token.isNotEmpty())
     }
 
     @Test
