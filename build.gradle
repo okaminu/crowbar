@@ -1,6 +1,6 @@
 buildscript {
     ext.kotlin_version = '1.2.51'
-    ext.detekt_version = '1.0.0-RC16'
+    ext.detekt_version = '1.0.0'
     
     dependencies {
         classpath 'org.owasp:dependency-check-gradle:5.0.0-M2'
@@ -9,7 +9,7 @@ buildscript {
 
 plugins {
     id 'org.jetbrains.kotlin.jvm' version "1.2.51"
-    id 'io.gitlab.arturbosch.detekt' version "1.0.0-RC16"
+    id 'io.gitlab.arturbosch.detekt' version "1.0.0"
 }
 
 apply plugin: 'org.owasp.dependencycheck'
