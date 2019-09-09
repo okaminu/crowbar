@@ -20,7 +20,6 @@ class IdentityConfirmation(
         confirmationMessageGateway.send(buildConfirmationMessage(code), address)
     }
 
-
     fun confirmCode(code: String) {
         val userId = userConfirmationCodeRepository.findByCode(code).id
 

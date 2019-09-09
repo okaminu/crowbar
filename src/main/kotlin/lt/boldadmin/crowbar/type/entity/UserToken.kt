@@ -2,8 +2,8 @@ package lt.boldadmin.crowbar.type.entity
 
 class UserToken(
 
-        val id: String,
+    val id: String,
 
-        val token: String
+    val token: String
 
 )

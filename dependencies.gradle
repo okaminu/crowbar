@@ -1,6 +1,6 @@
 repositories {
     mavenLocal()
-    mavenCentral()
+    jcenter()
     repositories {
         maven {
             url 'http://repository.boldadmin.com.s3.amazonaws.com/releases/'
@@ -14,6 +14,8 @@ dependencies {
     implementation 'com.amazonaws:aws-java-sdk-sns:1.11.258'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+    detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:$detekt_version"
 
     testImplementation "junit:junit:4.12"
     testImplementation "org.mockito:mockito-core:2.23.4"
