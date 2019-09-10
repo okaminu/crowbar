@@ -1,10 +1,12 @@
 buildscript {
     ext.kotlin_version = '1.3.41'
+    ext.detekt_version = '1.0.0'
 }
 
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.3.41'
     id 'org.owasp.dependencycheck' version '5.2.1'
+    id 'io.gitlab.arturbosch.detekt' version "1.0.0"
 }
 
 apply from: 'dependencies.gradle'
@@ -19,6 +21,12 @@ test {
     testLogging {
         events 'passed', 'skipped', 'failed'
     }
+}
+
+detekt {
+    toolVersion = "$detekt_version"
+    config = files("$rootDir/detekt/config.yml")
+    input = files("src/main/kotlin", "src/test/kotlin")
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
