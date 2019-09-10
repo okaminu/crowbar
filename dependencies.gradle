@@ -1,6 +1,6 @@
 repositories {
     mavenLocal()
-    jcenter()
+    mavenCentral()
     repositories {
         maven {
             url 'http://repository.boldadmin.com.s3.amazonaws.com/releases/'
@@ -11,19 +11,16 @@ repositories {
 dependencies {
     implementation "lt.boldadmin.crowbar:crowbar-api:$gradle.ext.version"
 
-    implementation 'com.amazonaws:aws-java-sdk-sns:1.11.258'
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
     detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:$detekt_version"
 
-    testImplementation "junit:junit:4.12"
-    testImplementation "org.mockito:mockito-core:2.23.4"
-    testImplementation "com.nhaarman:mockito-kotlin:1.6.0"
+    testImplementation "org.junit.jupiter:junit-jupiter:5.5.1"
+    testRuntimeOnly "org.junit.vintage:junit-vintage-engine:5.5.1"
+    testImplementation "io.mockk:mockk:1.9.3"
 
     testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
 
-    testImplementation "io.cucumber:cucumber-java8:2.3.1"
-    testImplementation "io.cucumber:cucumber-junit:2.3.1"
+    testImplementation "io.cucumber:cucumber-java8:4.7.0"
+    testImplementation "io.cucumber:cucumber-junit:4.7.0"
 }
